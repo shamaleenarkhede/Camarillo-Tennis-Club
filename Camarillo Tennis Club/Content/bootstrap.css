@@ -4025,7 +4025,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar {
   position: relative;
   z-index: 1000;
-  min-height: 50px;
+  min-height: 100px;
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
@@ -4194,8 +4194,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
   float: left;
   padding: 15px 15px;
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 48px;
+  font-family:'Brush Script MT';
+  line-height: 45px;
 }
 
 .navbar-brand:hover,
@@ -4245,7 +4246,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
-  line-height: 20px;
+  line-height: 50px;
+  font-size:20px;
 }
 
 @media (max-width: 767px) {
@@ -4501,8 +4503,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #002366;
+  border-color: firebrick;
 }
 
 .navbar-inverse .navbar-brand {
