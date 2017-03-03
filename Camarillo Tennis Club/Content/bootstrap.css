@@ -1406,7 +1406,19 @@ pre code {
 
 table {
   max-width: 100%;
-  background-color: transparent;
+  background-color:#FFFFF0;
+  
+}
+table-border {
+  border-style: solid;
+  border-width: medium;
+  border-top-style:solid;
+  border-top-width: medium;
+}
+
+innertable {
+  max-width: 100%;
+  background-color:#FFFFF0;
 }
 
 th {
@@ -1427,12 +1439,28 @@ th {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-top: 1px ridge rgba(0, 0, 0, 0.075);
 }
 
 .table thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid #000000;
+}
+
+.tr-head {
+    border-top: 2px solid #000;
+    border-left:2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    font-size:40px;
+    font-family:'Times New Roman';
+    
+}
+
+.td{
+    font-size:20px;
+    font-family:'Times New Roman';
+    border-top: 1px solid #000;
 }
 
 .table caption + thead tr:first-child th,
@@ -4195,7 +4223,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   float: left;
   padding: 15px 15px;
   font-size: 48px;
-  font-family:'Brush Script MT';
+  font-family:'Georgia';
+  font-style:italic;
   line-height: 45px;
 }
 
@@ -4455,7 +4484,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  color: #555555;
+  color: #777777;
   background-color: #e7e7e7;
 }
 
@@ -4503,12 +4532,19 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #002366;
+  background: linear-gradient(
+  to bottom,
+  #5d9634,
+  #5d9634 25%,
+  #538c2b 25%,
+  #538c2b 25%
+);
+  background-size: 100% 20px;
   border-color: firebrick;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #ffffff;
 }
 
 .navbar-inverse .navbar-brand:hover,
@@ -4522,7 +4558,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #999999;
+  color: #fff;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
