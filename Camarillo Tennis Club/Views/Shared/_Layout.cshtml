@@ -21,8 +21,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Matches", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Scores", "Scores", "Score")</li>
+                    <li>@Html.ActionLink("Matches", "AddNewMatch", "Matches")</li>
+                    <li>@Html.ActionLink("Scores", "Score", "Score")</li>
                   <!--  <li>@Html.ActionLink("Contact", "Contact", "Home")</li>-->
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -33,7 +33,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Rights reserved by Camarillo Tennis Club</p>
+            <p>&copy; @DateTime.Now.Year - Rights reserved by Compass Consulting</p>
         </footer>
     </div>
 

@@ -9,7 +9,7 @@ namespace Camarillo_Tennis_Club.Controllers
     public class ScoreController : Controller
     {
         // GET: Score
-        public ActionResult Scores()
+        public ActionResult Score()
         {
             return View();
         }
