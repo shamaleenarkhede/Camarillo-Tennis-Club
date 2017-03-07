@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Camarillo_Tennis_Club.Models
 {
@@ -7,7 +8,9 @@ namespace Camarillo_Tennis_Club.Models
     {
         [Key]
         public int ID { get; set; }
+        [ForeignKey("Matches")]
         public int MatchID { get; set; }
+        [ForeignKey("Players")]
         public int PlayerID { get; set; }
         public int Set1Score { get; set; }
         public int Set2Score { get; set; }

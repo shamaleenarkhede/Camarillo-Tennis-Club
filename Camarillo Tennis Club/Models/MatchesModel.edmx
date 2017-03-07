@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="MatchesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="MatchesModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MatchesModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MatchesModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Players" EntityType="MatchesModel.Players" />
+          <EntitySet Name="Matches" EntityType="MatchesModel.Matches" />
+          <EntitySet Name="Scores1" EntityType="MatchesModel.Score" />
+          <AssociationSet Name="PlayersMatches" Association="MatchesModel.PlayersMatches">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="MatchesPlayers" Association="MatchesModel.MatchesPlayers">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="MatchesScore1" Association="MatchesModel.MatchesScore1">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="Score" EntitySet="Scores1" />
+          </AssociationSet>
+          <AssociationSet Name="ScorePlayers" Association="MatchesModel.ScorePlayers">
+            <End Role="Score" EntitySet="Scores1" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="BDate" Type="String" Nullable="false" />
+          <NavigationProperty Name="Matches" />
+          <NavigationProperty Name="Matches1" Relationship="MatchesModel.PlayersMatches" FromRole="Players" ToRole="Matches" />
+          <NavigationProperty Name="Match" Relationship="MatchesModel.MatchesPlayers" FromRole="Players" ToRole="Matches" />
+          <Property Name="MatchesMatchID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Score" Relationship="MatchesModel.ScorePlayers" FromRole="Players" ToRole="Score" />
+        </EntityType>
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="MatchID" />
+          </Key>
+          <Property Name="MatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" Nullable="false" />
+          <Property Name="MatchDate" Type="String" Nullable="false" />
+          <Property Name="Player1ID" Type="String" Nullable="false" />
+          <Property Name="Player2ID" Type="String" Nullable="false" />
+          <Property Name="PlayerID" Type="String" Nullable="false" />
+          <NavigationProperty Name="Players" />
+          <NavigationProperty Name="Scores" />
+          <NavigationProperty Name="Player" Relationship="MatchesModel.PlayersMatches" FromRole="Matches" ToRole="Players" />
+          <Property Name="PlayersPlayerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Players1" Relationship="MatchesModel.MatchesPlayers" FromRole="Matches" ToRole="Players" />
+          <NavigationProperty Name="Scores2" Relationship="MatchesModel.MatchesScore1" FromRole="Matches" ToRole="Score" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchID" Type="String" Nullable="false" />
+          <Property Name="PlayerID" Type="String" Nullable="false" />
+          <Property Name="Set1Score" Type="String" Nullable="false" />
+          <Property Name="Set2Score" Type="String" Nullable="false" />
+          <Property Name="Set3Score" Type="String" Nullable="false" />
+          <NavigationProperty Name="Matches" />
+          <NavigationProperty Name="Players" />
+          <Property Name="MatchesMatchID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Match1" Relationship="MatchesModel.MatchesScore1" FromRole="Score" ToRole="Matches" />
+          <Property Name="MatchesMatchID1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="MatchesModel.ScorePlayers" FromRole="Score" ToRole="Players" />
+        </EntityType>
+        <Association Name="PlayersMatches">
+          <End Type="MatchesModel.Players" Role="Players" Multiplicity="1" />
+          <End Type="MatchesModel.Matches" Role="Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="PlayersPlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MatchesPlayers">
+          <End Type="MatchesModel.Matches" Role="Matches" Multiplicity="1" />
+          <End Type="MatchesModel.Players" Role="Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="MatchID" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="MatchesMatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MatchesScore1">
+          <End Type="MatchesModel.Matches" Role="Matches" Multiplicity="1" />
+          <End Type="MatchesModel.Score" Role="Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="MatchID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="MatchesMatchID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ScorePlayers">
+          <End Type="MatchesModel.Score" Role="Score" Multiplicity="1" />
+          <End Type="MatchesModel.Players" Role="Players" Multiplicity="0..1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="MatchesModel" />
+        <Alias Key="Target" Value="MatchesModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="MatchesModelContainer" StorageEntityContainer="MatchesModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

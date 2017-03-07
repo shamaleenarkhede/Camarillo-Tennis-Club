@@ -17,6 +17,7 @@ namespace Camarillo_Tennis_Club.Controllers
         // GET: Players
         public ActionResult Index()
         {
+            PlayersDBContext playersDBContext = new PlayersDBContext();
             return View(db.Player.ToList());
         }
 
@@ -46,12 +47,12 @@ namespace Camarillo_Tennis_Club.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlayerID,PlayerName,BDate")] Players players)
+        public ActionResult Create(Players players)
         {
             if (ModelState.IsValid)
             {
-                db.Player.Add(players);
-                db.SaveChanges();
+                PlayersDBContext playersDBContext = new PlayersDBContext();
+                playersDBContext.InsertPlayerDetails(players);
                 return RedirectToAction("Index");
             }
 
@@ -66,10 +67,12 @@ namespace Camarillo_Tennis_Club.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Players players = db.Player.Find(id);
+            ViewBag.BDate = players.BDate.Date;
             if (players == null)
             {
                 return HttpNotFound();
-            }
+            }            
+            
             return View(players);
         }
 
@@ -78,7 +81,7 @@ namespace Camarillo_Tennis_Club.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerID,PlayerName,BDate")] Players players)
+        public ActionResult Edit([Bind(Include = "PlayerID,FirstName, LastName,BDate")] Players players)
         {
             if (ModelState.IsValid)
             {
@@ -90,19 +93,19 @@ namespace Camarillo_Tennis_Club.Controllers
         }
 
         // GET: Players/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Players players = db.Player.Find(id);
-            if (players == null)
-            {
-                return HttpNotFound();
-            }
-            return View(players);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Players players = db.Player.Find(id);
+        //    if (players == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(players);
+        //}
 
         // POST: Players/Delete/5
         [HttpPost, ActionName("Delete")]
