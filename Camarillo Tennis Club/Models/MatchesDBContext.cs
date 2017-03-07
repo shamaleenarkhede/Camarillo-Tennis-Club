@@ -58,5 +58,68 @@ namespace Camarillo_Tennis_Club.Models
                 return result;
             }
             }
+
+        public int UpdateMatchDetails(Matches matches)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spInsertMatches", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter paramLocation = new SqlParameter();
+                paramLocation.ParameterName = "@Location";
+                paramLocation.Value = matches.Location;
+                cmd.Parameters.Add(paramLocation);
+
+
+                SqlParameter paramMatchDate = new SqlParameter();
+                paramMatchDate.ParameterName = "@MatchDate";
+                paramMatchDate.Value = matches.MatchDate;
+                cmd.Parameters.Add(paramMatchDate);
+
+
+                SqlParameter paramPlayer1ID = new SqlParameter();
+                paramPlayer1ID.ParameterName = "@Player1ID";
+                paramPlayer1ID.Value = matches.Player1ID;
+                cmd.Parameters.Add(paramPlayer1ID);
+
+
+                SqlParameter paramPlayer2ID = new SqlParameter();
+                paramPlayer2ID.ParameterName = "@Player2ID";
+                paramPlayer2ID.Value = matches.Player2ID;
+                cmd.Parameters.Add(paramPlayer2ID);
+
+                SqlParameter paramWinnerID = new SqlParameter();
+                paramWinnerID.ParameterName = "@WinnerID";
+                paramWinnerID.Value = matches.WinnerID;
+                cmd.Parameters.Add(paramWinnerID);
+                
+                con.Open();
+                int result = cmd.ExecuteNonQuery();
+
+                return result;
+            }
+        }
+
+
+        public DataSet GetMatchesPlayers()
+            {
+            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spGetMatchesPlayers", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                con.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds;
+            }
+        }
         }
 }

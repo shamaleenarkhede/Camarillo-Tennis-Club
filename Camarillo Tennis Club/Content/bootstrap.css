@@ -1461,6 +1461,7 @@ th {
     font-size:20px;
     font-family:'Times New Roman';
     border-top: 1px solid #000;
+    width:"100px";
 }
 
 .table caption + thead tr:first-child th,

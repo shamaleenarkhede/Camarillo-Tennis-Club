@@ -20,7 +20,7 @@ namespace Camarillo_Tennis_Club.Models
         [ScaffoldColumn(false)]
         public string FullName
         {
-            get { return LastName + ", " + FirstName; }
+            get { return LastName + " " + FirstName; }
         }
 
         [DataType(DataType.Date), Display(Name = "Enter Birth Date")]

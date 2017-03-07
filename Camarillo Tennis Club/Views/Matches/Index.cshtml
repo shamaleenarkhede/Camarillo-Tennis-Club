@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Camarillo_Tennis_Club.Models.Matches>
+﻿@model Camarillo_Tennis_Club.Models.Matches
 
 @{
     ViewBag.Title = "Index";
@@ -12,25 +12,25 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.MatchName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Location)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MatchDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Player1ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Player2ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WinnerID)
+            @Html.DisplayName("Winner Name")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.matchesList) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatchName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Location)
         </td>
@@ -38,17 +38,11 @@
             @Html.DisplayFor(modelItem => item.MatchDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Player1ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Player2ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WinnerID)
+            @Html.DisplayFor(modelItem => item.WinnerName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MatchID }) |
+            @Html.ActionLink("Details", "Details","Scores", new { id=item.MatchID },null) 
         @*    @Html.ActionLink("Delete", "Delete", new { id=item.MatchID })*@
         </td>
     </tr>

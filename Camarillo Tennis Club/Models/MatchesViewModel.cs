@@ -10,6 +10,11 @@ namespace Camarillo_Tennis_Club.Models
 {
     public class MatchesViewModel
     {
+        public int MatchID { get; set; }
+        public string MatchName { get; set; }
+        public string Location { get; set; }
+        public DateTime MatchDate { get; set; }
+        public List<MatchesViewModel> MatchesList { get; set; }
     }
 
     public class AddNewMatchViewModel
@@ -27,11 +32,11 @@ namespace Camarillo_Tennis_Club.Models
 
         [Display(Name = "Select Player - 1")]
         public int Player1ID { get; set; }   
-       // public string Player1Name { get; set; }
+        public string Player1Name { get; set; }
 
         [Display(Name = "Select Player - 2")]
         public int Player2ID { get; set; }
-        //public string Player2Name { get; set; }
+        public string Player2Name { get; set; }
 
         [Display(Name = "Select Winner")]
         public int WinnerID { get; set; }

@@ -4,13 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Create</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Matches</h4>
         <hr />
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Player1ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,24 +42,66 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Player2ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2ID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PlayerID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.WinnerID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PlayerID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlayerID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WinnerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.Label("Scores", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <table border="1" cellpadding="1" class="table table-border">
+                    <tr>
+                        <th>
+                            Player
+                        </th>
+                        <th>
+                            Set-1 Score
+                        </th>
+                        <th>
+                            Set-2 Score
+                        </th>
+                        <th>
+                            Set-3 Score
+                        </th>
+                    </tr>
+                  
+                    <tr>
+                        <td>Player-1</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, Model.SetScores)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Player-2</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, Model.SetScores)</td>
+                    </tr>
+                  
+
+                </table>
+
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Edit" class="btn btn-default" />
             </div>
         </div>
+
+
     </div>
 }
 
@@ -70,3 +112,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

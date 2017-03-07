@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.WinnerID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Winner Player ---", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.WinnerID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,14 +83,14 @@
                         while (i > 0 && i < 3)
                         {*@
                             <tr>
-                                <td>Player</td>
+                                <td>Player-1</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, ViewData["list"] as SelectList)</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, ViewData["list"] as SelectList)</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, ViewData["list"] as SelectList)</td>
                             </tr>
 
                             <tr>
-                                <td>Player</td>
+                                <td>Player-2</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, ViewData["list"] as SelectList)</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, ViewData["list"] as SelectList)</td>
                                 <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, ViewData["list"] as SelectList)</td>

@@ -18,7 +18,29 @@ namespace Camarillo_Tennis_Club.Controllers
         // GET: Matches
         public ActionResult Index()
         {
-            return View();
+            MatchesDBContext matchesDBContext = new MatchesDBContext();
+            DataSet dsMatchesPlayers = new DataSet();
+            dsMatchesPlayers = matchesDBContext.GetMatchesPlayers();
+            List<Matches> matchesList = new List<Matches>();
+            Matches matches = new Matches();
+            for (int i = 0; i < dsMatchesPlayers.Tables[0].Rows.Count; i++)
+            {
+                matches = new Matches();
+                matches.MatchID = Convert.ToInt32(dsMatchesPlayers.Tables[0].Rows[i]["MatchID"]);
+                matches.Location = Convert.ToString(dsMatchesPlayers.Tables[0].Rows[i]["Location"]);
+                matches.MatchDate = Convert.ToDateTime(dsMatchesPlayers.Tables[0].Rows[i]["MatchDate"]);
+                matches.Player1ID = Convert.ToInt32(dsMatchesPlayers.Tables[0].Rows[i]["Player1ID"]);
+                matches.Player2ID = Convert.ToInt32(dsMatchesPlayers.Tables[0].Rows[i]["Player1ID"]);
+                matches.Player1Name = Convert.ToString(dsMatchesPlayers.Tables[0].Rows[i]["Player1Name"]);
+                matches.Player2Name = Convert.ToString(dsMatchesPlayers.Tables[0].Rows[i]["Player2Name"]);
+                matches.WinnerName = Convert.ToString(dsMatchesPlayers.Tables[0].Rows[i]["WinnerName"]);
+                matchesList.Add(matches);
+            }
+            matches.matchesList = matchesList;
+            Session["Matches"] = matches;
+            var matchesSession = (Matches)Session["Matches"];
+
+            return View(matches);
            // return View(db.Match.ToList());
         }
 
@@ -29,12 +51,8 @@ namespace Camarillo_Tennis_Club.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Matches matches = db.Match.Find(id);
-            if (matches == null)
-            {
-                return HttpNotFound();
-            }
-            return View(matches);
+            return RedirectToAction("Details", "Scores", new { id = "" });
+          //  return View(matches);
         }
 
         // GET: Matches/Create
@@ -56,7 +74,7 @@ namespace Camarillo_Tennis_Club.Controllers
                 new { ID = "6", Name = "6" },
                 new { ID = "7", Name = "7" }
             },
-                "ID", "Name", 0);
+                "ID", "Name",0);
 
             ViewData["list"] = list;
 
@@ -68,35 +86,60 @@ namespace Camarillo_Tennis_Club.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddNewMatchViewModel matches)
+        public ActionResult Create(AddNewMatchViewModel addNewMatchViewModel)
         {
             if (ModelState.IsValid)
             {
                 MatchesDBContext matchesDBContext = new MatchesDBContext();
-                int MatchID=matchesDBContext.InsertMatchDetails(matches);
-                matches.MatchID = MatchID;
+                int MatchID=matchesDBContext.InsertMatchDetails(addNewMatchViewModel);
+                addNewMatchViewModel.MatchID = MatchID;
                 ScoresDBContext scoresDBContext = new ScoresDBContext();
-                scoresDBContext.InsertScores(matches);
-                   
-               
+                scoresDBContext.InsertScores(addNewMatchViewModel);
                 return RedirectToAction("Index");
             }
 
-            return View(matches);
+            return View(addNewMatchViewModel);
         }
 
         // GET: Matches/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            TempData["MatchID"] = id;
+            Matches matches = new Matches();
+            matches.SetScores = new List<SelectListItem>
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Matches matches = db.Match.Find(id);
-            if (matches == null)
+                new SelectListItem{ Text = "0", Value = "0" },
+                new SelectListItem{Text = "1", Value = "1" },
+                new SelectListItem{ Text = "2", Value = "2"},
+                new SelectListItem{ Text = "3", Value = "3" },
+                new SelectListItem{ Text = "4", Value = "4"},
+                new SelectListItem{Text = "5", Value = "5"},
+                new SelectListItem{ Text = "6", Value = "6"},
+                new SelectListItem{ Text = "7", Value = "7" }
+            };
+          
+            List<Score> scoresList = new List<Score>();
+            ScoresDBContext scoresDBContext = new ScoresDBContext();
+            DataSet dsMatchPlayerScores = new DataSet();
+            dsMatchPlayerScores = scoresDBContext.GetMatchPlayersScores(id);
+            matches.playerNames = getPlayersList();
+            matches.Location = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Location"]);
+            matches.MatchDate = Convert.ToDateTime(dsMatchPlayerScores.Tables[0].Rows[0]["MatchDate"]);
+            matches.Player1ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player1ID"]);
+            matches.Player2ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player2ID"]);
+            matches.WinnerID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerID"]);
+            matches.Player1Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player1Name"]);
+            matches.Player2Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player2Name"]);
+            matches.WinnerName = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerName"]);
+            for (int i = 0; i < dsMatchPlayerScores.Tables[0].Rows.Count; i++)
             {
-                return HttpNotFound();
+                Score score = new Score();
+                score.Set1Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set1Score"]);
+                score.Set2Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set2Score"]);
+                score.Set3Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set3Score"]);
+                scoresList.Add(score);
             }
+            matches.scoreList = scoresList;
             return View(matches);
         }
 
@@ -105,12 +148,15 @@ namespace Camarillo_Tennis_Club.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MatchID,Location,MatchDate,Player1ID,Player2ID,WinnerID")] Matches matches)
+        public ActionResult Edit(Matches matches)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(matches).State = EntityState.Modified;
-                db.SaveChanges();
+                matches.MatchID = Convert.ToInt32(TempData["MatchID"]);
+                ScoresDBContext scoresDBContext = new ScoresDBContext();
+                scoresDBContext.UpdateScores(matches);
+                MatchesDBContext matchesDBContext = new MatchesDBContext();
+                matchesDBContext.UpdateMatchDetails(matches);
                 return RedirectToAction("Index");
             }
             return View(matches);
