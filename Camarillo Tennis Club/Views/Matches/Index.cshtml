@@ -6,7 +6,9 @@
 
 <h2>Index</h2>
 
+
 <p>
+    @Html.ActionLink("Search for Score Cards", "Search")
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -42,7 +44,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
-            @Html.ActionLink("Details", "Details","Scores", new { id=item.MatchID },null) 
+            @Html.ActionLink("View Score Card", "Details","Scores", new { id=item.MatchID },null) 
         @*    @Html.ActionLink("Delete", "Delete", new { id=item.MatchID })*@
         </td>
     </tr>

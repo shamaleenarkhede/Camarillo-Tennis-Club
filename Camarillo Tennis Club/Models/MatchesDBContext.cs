@@ -121,5 +121,28 @@ namespace Camarillo_Tennis_Club.Models
                 return ds;
             }
         }
+
+        public DataSet GetMatchUsingSearchString(string SearchString)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spGetMatchesUsingSearchString", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter paramSearchString = new SqlParameter();
+                paramSearchString.ParameterName = "@SearchString";
+                paramSearchString.Value = SearchString;
+                cmd.Parameters.Add(paramSearchString);
+
+                con.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds;
+            }
         }
+    }
 }

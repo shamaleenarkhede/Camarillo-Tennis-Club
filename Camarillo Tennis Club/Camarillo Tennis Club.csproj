@@ -317,7 +317,7 @@
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\Matches\Create.cshtml" />
-    <Content Include="Views\Matches\Delete.cshtml" />
+    <Content Include="Views\Matches\Search.cshtml" />
     <Content Include="Views\Matches\Details.cshtml" />
     <Content Include="Views\Matches\Edit.cshtml" />
     <Content Include="Views\Matches\Index.cshtml" />
@@ -326,6 +326,7 @@
     <Content Include="Views\Scores\Details.cshtml" />
     <Content Include="Views\Scores\Edit.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\Matches\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
