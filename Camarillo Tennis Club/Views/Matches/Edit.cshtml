@@ -26,7 +26,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MatchDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MatchDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.MatchDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date"})
+                @*@Html.EditorFor(model => model.MatchDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.MatchDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -77,16 +78,16 @@
                   
                     <tr>
                         <td>Player-1</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, Model.SetScores)</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, Model.SetScores)</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, new SelectList(Model.set1ScoreList,"Set1Score", "ScoreValue"))</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, new SelectList(Model.set2ScoreList, "Set2Score", "ScoreValue"))</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, new SelectList(Model.set3ScoreList, "Set3Score", "ScoreValue"))</td>
                     </tr>
 
                     <tr>
                         <td>Player-2</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, Model.SetScores)</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, Model.SetScores)</td>
-                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, Model.SetScores)</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, new SelectList(Model.set1ScoreList, "Set1Score", "ScoreValue"))</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, new SelectList(Model.set2ScoreList, "Set2Score", "ScoreValue"))</td>
+                        <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, new SelectList(Model.set3ScoreList, "Set3Score", "ScoreValue"))</td>
                     </tr>
                   
 

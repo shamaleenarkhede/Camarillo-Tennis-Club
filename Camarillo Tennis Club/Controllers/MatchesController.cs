@@ -38,26 +38,62 @@ namespace Camarillo_Tennis_Club.Controllers
         public ActionResult Create()
         {
             // Populate the dropdownlists
+            Matches matches = new Matches();
+            matches.playerNames = getPlayersList();
+            matches.MatchDate = DateTime.Now;
 
-            AddNewMatchViewModel addNewMatchViewModel = new AddNewMatchViewModel();
-            addNewMatchViewModel.playerNames = getPlayersList();
+            matches.set1ScoreList = new List<Score> {
+                new Score {Set1Score = 0, ScoreValue = 0 },
+                new Score {Set1Score = 1, ScoreValue = 1 },
+                new Score {Set1Score = 2, ScoreValue = 2 },
+                new Score {Set1Score = 3, ScoreValue = 3 },
+                new Score {Set1Score = 4, ScoreValue = 4 },
+                new Score {Set1Score = 5, ScoreValue = 5 },
+                new Score {Set1Score = 6, ScoreValue = 6 },
+                new Score {Set1Score = 7, ScoreValue = 7 },
+            };
 
-            var list = new SelectList(new[]
-            {
-                new { ID = "0", Name = "0" },
-                new { ID = "1", Name = "1" },
-                new { ID = "2", Name = "2" },
-                new { ID = "3", Name = "3" },
-                new { ID = "4", Name = "4" },
-                new { ID = "5", Name = "5" },
-                new { ID = "6", Name = "6" },
-                new { ID = "7", Name = "7" }
-            },
-                "ID", "Name",0);
+            matches.set2ScoreList = new List<Score> {
+                new Score {Set2Score = 0, ScoreValue = 0 },
+                new Score {Set2Score = 1, ScoreValue = 1 },
+                new Score {Set2Score = 2, ScoreValue = 2 },
+                new Score {Set2Score = 3, ScoreValue = 3 },
+                new Score {Set2Score = 4, ScoreValue = 4 },
+                new Score {Set2Score = 5, ScoreValue = 5 },
+                new Score {Set2Score = 6, ScoreValue = 6 },
+                new Score {Set2Score = 7, ScoreValue = 7 },
+            };
 
-            ViewData["list"] = list;
+            matches.set3ScoreList = new List<Score> {
+                new Score {Set3Score = 0, ScoreValue = 0 },
+                new Score {Set3Score = 1, ScoreValue = 1 },
+                new Score {Set3Score = 2, ScoreValue = 2 },
+                new Score {Set3Score = 3, ScoreValue = 3 },
+                new Score {Set3Score = 4, ScoreValue = 4 },
+                new Score {Set3Score = 5, ScoreValue = 5 },
+                new Score {Set3Score = 6, ScoreValue = 6 },
+                new Score {Set3Score = 7, ScoreValue = 7 },
+            };
 
-            return View(addNewMatchViewModel);
+            //AddNewMatchViewModel addNewMatchViewModel = new AddNewMatchViewModel();
+            //addNewMatchViewModel.playerNames = getPlayersList();
+
+            //var list = new SelectList(new[]
+            //{
+            //    new { ID = "0", Name = "0" },
+            //    new { ID = "1", Name = "1" },
+            //    new { ID = "2", Name = "2" },
+            //    new { ID = "3", Name = "3" },
+            //    new { ID = "4", Name = "4" },
+            //    new { ID = "5", Name = "5" },
+            //    new { ID = "6", Name = "6" },
+            //    new { ID = "7", Name = "7" }
+            //},
+            //    "ID", "Name",0);
+
+            //ViewData["list"] = list;
+
+            return View(matches);
         }
 
         // POST: Matches/Create
@@ -65,19 +101,58 @@ namespace Camarillo_Tennis_Club.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddNewMatchViewModel addNewMatchViewModel)
+        public ActionResult Create(Matches matches)
         {
             if (ModelState.IsValid)
             {
                 MatchesDBContext matchesDBContext = new MatchesDBContext();
-                int MatchID=matchesDBContext.InsertMatchDetails(addNewMatchViewModel);
-                addNewMatchViewModel.MatchID = MatchID;
+                int MatchID=matchesDBContext.InsertMatchDetails(matches);
+                matches.MatchID = MatchID;
                 ScoresDBContext scoresDBContext = new ScoresDBContext();
-                scoresDBContext.InsertScores(addNewMatchViewModel);
+                scoresDBContext.InsertScores(matches);
                 return RedirectToAction("Index");
             }
+            else
+            {
+                matches.set1ScoreList = new List<Score> {
+                new Score {Set1Score = 0, ScoreValue = 0 },
+                new Score {Set1Score = 1, ScoreValue = 1 },
+                new Score {Set1Score = 2, ScoreValue = 2 },
+                new Score {Set1Score = 3, ScoreValue = 3 },
+                new Score {Set1Score = 4, ScoreValue = 4 },
+                new Score {Set1Score = 5, ScoreValue = 5 },
+                new Score {Set1Score = 6, ScoreValue = 6 },
+                new Score {Set1Score = 7, ScoreValue = 7 },
+            };
 
-            return View(addNewMatchViewModel);
+                matches.set2ScoreList = new List<Score> {
+                new Score {Set2Score = 0, ScoreValue = 0 },
+                new Score {Set2Score = 1, ScoreValue = 1 },
+                new Score {Set2Score = 2, ScoreValue = 2 },
+                new Score {Set2Score = 3, ScoreValue = 3 },
+                new Score {Set2Score = 4, ScoreValue = 4 },
+                new Score {Set2Score = 5, ScoreValue = 5 },
+                new Score {Set2Score = 6, ScoreValue = 6 },
+                new Score {Set2Score = 7, ScoreValue = 7 },
+            };
+
+                matches.set3ScoreList = new List<Score> {
+                new Score {Set3Score = 0, ScoreValue = 0 },
+                new Score {Set3Score = 1, ScoreValue = 1 },
+                new Score {Set3Score = 2, ScoreValue = 2 },
+                new Score {Set3Score = 3, ScoreValue = 3 },
+                new Score {Set3Score = 4, ScoreValue = 4 },
+                new Score {Set3Score = 5, ScoreValue = 5 },
+                new Score {Set3Score = 6, ScoreValue = 6 },
+                new Score {Set3Score = 7, ScoreValue = 7 },
+            };
+
+
+                matches.playerNames = getPlayersList();
+                return View(matches);
+            }
+
+           
         }
 
         // GET: Matches/Edit/5
@@ -85,18 +160,40 @@ namespace Camarillo_Tennis_Club.Controllers
         {
             TempData["MatchID"] = id;
             Matches matches = new Matches();
-            matches.SetScores = new List<SelectListItem>
-            {
-                new SelectListItem{ Text = "0", Value = "0" },
-                new SelectListItem{Text = "1", Value = "1" },
-                new SelectListItem{ Text = "2", Value = "2"},
-                new SelectListItem{ Text = "3", Value = "3" },
-                new SelectListItem{ Text = "4", Value = "4"},
-                new SelectListItem{Text = "5", Value = "5"},
-                new SelectListItem{ Text = "6", Value = "6"},
-                new SelectListItem{ Text = "7", Value = "7" }
+            
+            matches.set1ScoreList = new List<Score> {
+                new Score {Set1Score = 0, ScoreValue = 0 },
+                new Score {Set1Score = 1, ScoreValue = 1 },
+                new Score {Set1Score = 2, ScoreValue = 2 },
+                new Score {Set1Score = 3, ScoreValue = 3 },
+                new Score {Set1Score = 4, ScoreValue = 4 },
+                new Score {Set1Score = 5, ScoreValue = 5 },
+                new Score {Set1Score = 6, ScoreValue = 6 },
+                new Score {Set1Score = 7, ScoreValue = 7 },
             };
-          
+
+            matches.set2ScoreList = new List<Score> {
+                new Score {Set2Score = 0, ScoreValue = 0 },
+                new Score {Set2Score = 1, ScoreValue = 1 },
+                new Score {Set2Score = 2, ScoreValue = 2 },
+                new Score {Set2Score = 3, ScoreValue = 3 },
+                new Score {Set2Score = 4, ScoreValue = 4 },
+                new Score {Set2Score = 5, ScoreValue = 5 },
+                new Score {Set2Score = 6, ScoreValue = 6 },
+                new Score {Set2Score = 7, ScoreValue = 7 },
+            };
+
+            matches.set3ScoreList = new List<Score> {
+                new Score {Set3Score = 0, ScoreValue = 0 },
+                new Score {Set3Score = 1, ScoreValue = 1 },
+                new Score {Set3Score = 2, ScoreValue = 2 },
+                new Score {Set3Score = 3, ScoreValue = 3 },
+                new Score {Set3Score = 4, ScoreValue = 4 },
+                new Score {Set3Score = 5, ScoreValue = 5 },
+                new Score {Set3Score = 6, ScoreValue = 6 },
+                new Score {Set3Score = 7, ScoreValue = 7 },
+            };
+
             List<Score> scoresList = new List<Score>();
             ScoresDBContext scoresDBContext = new ScoresDBContext();
             DataSet dsMatchPlayerScores = new DataSet();
@@ -123,8 +220,6 @@ namespace Camarillo_Tennis_Club.Controllers
         }
 
         // POST: Matches/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Matches matches)

@@ -1,4 +1,4 @@
-﻿@model Camarillo_Tennis_Club.Models.AddNewMatchViewModel
+﻿@model Camarillo_Tennis_Club.Models.Matches
 
 
 
@@ -11,6 +11,7 @@
 
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -28,7 +29,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MatchDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MatchDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.MatchDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+             @*   @Html.EditorFor(model => model.MatchDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.MatchDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @id = "ddlPlayer-1",onchanage = "test3()", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +46,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new { @id = "ddlPlayer-2", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +59,7 @@
             </div>
         </div>
 
-      
+
         <div class="form-group">
             @Html.Label("Scores", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -84,16 +86,16 @@
                         {*@
                             <tr>
                                 <td>Player-1</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, ViewData["list"] as SelectList)</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, ViewData["list"] as SelectList)</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, ViewData["list"] as SelectList)</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set1Score, new SelectList(Model.set1ScoreList, "Set1Score", "ScoreValue"))</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set2Score, new SelectList(Model.set2ScoreList, "Set2Score", "ScoreValue"))</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[0].Set3Score, new SelectList(Model.set3ScoreList, "Set3Score", "ScoreValue"))</td>
                             </tr>
 
                             <tr>
                                 <td>Player-2</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, ViewData["list"] as SelectList)</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, ViewData["list"] as SelectList)</td>
-                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, ViewData["list"] as SelectList)</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set1Score, new SelectList(Model.set1ScoreList, "Set1Score", "ScoreValue"))</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set2Score, new SelectList(Model.set2ScoreList, "Set2Score", "ScoreValue"))</td>
+                                <td>@Html.DropDownListFor(model => model.scoreList[1].Set3Score, new SelectList(Model.set3ScoreList, "Set3Score", "ScoreValue"))</td>
                             </tr>
                             @*i++;
                         }
@@ -109,9 +111,11 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    
+
 
    </div>
+
+
 }
 
 <div>
@@ -120,4 +124,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/validmatchdate.js"></script>
 }

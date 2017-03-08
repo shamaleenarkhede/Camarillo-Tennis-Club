@@ -11,7 +11,7 @@ namespace Camarillo_Tennis_Club.Models
     public class MatchesDBContext
     {
 
-        public int InsertMatchDetails(AddNewMatchViewModel addNewMatchViewModel)
+        public int InsertMatchDetails(Matches matches)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
 
@@ -22,30 +22,30 @@ namespace Camarillo_Tennis_Club.Models
 
                 SqlParameter paramLocation = new SqlParameter();
                 paramLocation.ParameterName = "@Location";
-                paramLocation.Value = addNewMatchViewModel.Location;
+                paramLocation.Value = matches.Location;
                 cmd.Parameters.Add(paramLocation);
 
 
                 SqlParameter paramMatchDate = new SqlParameter();
                 paramMatchDate.ParameterName = "@MatchDate";
-                paramMatchDate.Value = addNewMatchViewModel.MatchDate;
+                paramMatchDate.Value = matches.MatchDate;
                 cmd.Parameters.Add(paramMatchDate);
 
 
                 SqlParameter paramPlayer1ID = new SqlParameter();
                 paramPlayer1ID.ParameterName = "@Player1ID";
-                paramPlayer1ID.Value = addNewMatchViewModel.Player1ID;
+                paramPlayer1ID.Value = matches.Player1ID;
                 cmd.Parameters.Add(paramPlayer1ID);
 
 
                 SqlParameter paramPlayer2ID = new SqlParameter();
                 paramPlayer2ID.ParameterName = "@Player2ID";
-                paramPlayer2ID.Value = addNewMatchViewModel.Player2ID;
+                paramPlayer2ID.Value = matches.Player2ID;
                 cmd.Parameters.Add(paramPlayer2ID);
 
                 SqlParameter paramWinnerID = new SqlParameter();
                 paramWinnerID.ParameterName = "@WinnerID";
-                paramWinnerID.Value = addNewMatchViewModel.WinnerID;
+                paramWinnerID.Value = matches.WinnerID;
                 cmd.Parameters.Add(paramWinnerID);
 
                 //var returnParameter = cmd.Parameters.Add("@RetVal", SqlDbType.Int);

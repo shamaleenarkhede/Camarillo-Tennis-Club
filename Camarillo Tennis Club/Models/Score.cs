@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace Camarillo_Tennis_Club.Models
 {
@@ -19,6 +20,10 @@ namespace Camarillo_Tennis_Club.Models
         public virtual ICollection<Players> Players { get; set;}
 
         public virtual Matches Matches { get; set;}
+
+        public int ScoreValue { get; set; }
+
+    
     }
 
    
