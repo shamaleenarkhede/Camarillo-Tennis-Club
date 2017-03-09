@@ -197,6 +197,7 @@
     <Compile Include="Models\PlayersDBContext.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\ScoresDBContext.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validation Attributes\NotEqualTo.cs" />

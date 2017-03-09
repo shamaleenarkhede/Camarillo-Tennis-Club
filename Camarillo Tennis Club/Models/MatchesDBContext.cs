@@ -22,7 +22,7 @@ namespace Camarillo_Tennis_Club.Models
 
                 SqlParameter paramLocation = new SqlParameter();
                 paramLocation.ParameterName = "@Location";
-                paramLocation.Value = matches.Location;
+                paramLocation.Value = matches.Location.ToUpper();
                 cmd.Parameters.Add(paramLocation);
 
 
@@ -64,7 +64,7 @@ namespace Camarillo_Tennis_Club.Models
 
                 SqlParameter paramLocation = new SqlParameter();
                 paramLocation.ParameterName = "@Location";
-                paramLocation.Value = matches.Location;
+                paramLocation.Value = matches.Location.ToUpper();
                 cmd.Parameters.Add(paramLocation);
 
 
@@ -120,7 +120,7 @@ namespace Camarillo_Tennis_Club.Models
             }
         }
 
-        public DataSet GetMatchUsingSearchString(string SearchString)
+        public DataSet GetMatchUsingSearchString(string SearchString, DateTime SearchDate)
         {
           
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -128,11 +128,35 @@ namespace Camarillo_Tennis_Club.Models
                 SqlCommand cmd = new SqlCommand("spGetMatchesUsingSearchString", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                SqlParameter paramSearchString = new SqlParameter();
-                paramSearchString.ParameterName = "@SearchString";
-                paramSearchString.Value = SearchString;
-                cmd.Parameters.Add(paramSearchString);
+                if (SearchString == null || SearchString == "")
+                {
+                    SqlParameter paramSearchString = new SqlParameter();
+                    paramSearchString.ParameterName = "@SearchString";
+                    paramSearchString.Value = "null";
+                    cmd.Parameters.Add(paramSearchString);
+                }
+                else
+                {
+                    SqlParameter paramSearchString = new SqlParameter();
+                    paramSearchString.ParameterName = "@SearchString";
+                    paramSearchString.Value = SearchString.ToUpper();
+                    cmd.Parameters.Add(paramSearchString);
+                }
 
+                if (SearchDate == Convert.ToDateTime("01-01-0001"))
+                {
+                    SqlParameter paramSearchDate = new SqlParameter();
+                    paramSearchDate.ParameterName = "@SearchDate";
+                    paramSearchDate.Value = Convert.ToDateTime("01-01-2000");
+                    cmd.Parameters.Add(paramSearchDate);
+                }
+                else
+                {
+                    SqlParameter paramSearchDate = new SqlParameter();
+                    paramSearchDate.ParameterName = "@SearchDate";
+                    paramSearchDate.Value = SearchDate;
+                    cmd.Parameters.Add(paramSearchDate);
+                }
                 con.Open();
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -141,5 +165,6 @@ namespace Camarillo_Tennis_Club.Models
                 return ds;
             }
         }
+
     }
 }

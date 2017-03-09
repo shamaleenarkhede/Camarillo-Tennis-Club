@@ -10,7 +10,13 @@ namespace Camarillo_Tennis_Club.Controllers
     {
         public ActionResult Index()
         {
+            if(Convert.ToString(Session["Role"])== "Admin")
+            {
+                return RedirectToAction("AdminHome","Login");
+            }
+            else { 
             return View();
+            }
         }
 
         public ActionResult About()

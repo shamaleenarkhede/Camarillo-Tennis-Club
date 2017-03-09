@@ -11,7 +11,7 @@ namespace Camarillo_Tennis_Club.Controllers
 
     public class MatchesController : Controller
     {
-
+     
 
         // GET: Matches
         [ExceptionHandler]
@@ -19,12 +19,13 @@ namespace Camarillo_Tennis_Club.Controllers
         {
             try
             {
-                MatchesDBContext matchesDBContext = new MatchesDBContext();
-                DataSet dsMatchesPlayers = new DataSet();
-                dsMatchesPlayers = matchesDBContext.GetMatchesPlayers();
-                Matches matches = new Matches();
-                matches = getMatchResults(dsMatchesPlayers);
-                return View(matches);
+                    MatchesDBContext matchesDBContext = new MatchesDBContext();
+                    DataSet dsMatchesPlayers = new DataSet();
+                    dsMatchesPlayers = matchesDBContext.GetMatchesPlayers();
+                
+                    Matches matches = new Matches();
+                    matches = getMatchResults(dsMatchesPlayers);
+                    return View(matches);
             }
             catch (Exception ex)
             {
@@ -180,17 +181,21 @@ namespace Camarillo_Tennis_Club.Controllers
         [HttpPost, ActionName("Search")]
         [ValidateAntiForgeryToken]
         [HandleError]
-        public ActionResult Search(Matches matches)
+        public ActionResult Search(SearchViewModel searchViewModel)
         {
             try
             {
-                string searchString = matches.Location;
-                MatchesDBContext matchesDBContext = new MatchesDBContext();
-                DataSet dsResult = new DataSet();
-                dsResult = matchesDBContext.GetMatchUsingSearchString(searchString);
-                Matches objMatches = new Matches();
-                objMatches = getMatchResults(dsResult);
-                return RedirectToAction("SearchResults", objMatches);
+                if (ModelState.IsValid)
+                {
+                    string searchString = "";
+                    searchString = searchViewModel.SearchString;
+                    DateTime? searchDate = searchViewModel.SearchDate;
+                    TempData["searchString"] = searchString;
+                    TempData["searchDate"] = searchDate;
+                    return RedirectToAction("SearchResults");
+                }
+                else
+                { return View(); }
             }
             catch (Exception ex)
             {
@@ -263,18 +268,26 @@ namespace Camarillo_Tennis_Club.Controllers
 
         [ActionName("SearchResults")]
         [HandleError]
-        public ActionResult SearchResults(Matches matches)
+        public ActionResult SearchResults(SearchViewModel searchViewModel)
         {
             try
             {
-                string searchString = matches.Location;
+                string searchString = Convert.ToString(TempData["searchString"]);
+                DateTime searchDate = Convert.ToDateTime(TempData["searchDate"]);
                 MatchesDBContext matchesDBContext = new MatchesDBContext();
                 DataSet dsResult = new DataSet();
-                dsResult = matchesDBContext.GetMatchUsingSearchString(searchString);
+                dsResult = matchesDBContext.GetMatchUsingSearchString(searchString,searchDate);
                 Matches objMatches = new Matches();
                 objMatches = getMatchResults(dsResult);
+                if (objMatches != null)
+                {
 
-                return View(objMatches);
+                    return View(objMatches);
+                }
+                else
+                {
+                    return RedirectToAction("Search", "Matches", "Please enter valid data");
+                }
             }
             catch (Exception ex)
             {

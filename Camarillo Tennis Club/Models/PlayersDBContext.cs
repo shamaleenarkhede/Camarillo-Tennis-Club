@@ -23,12 +23,12 @@ namespace Camarillo_Tennis_Club.Models
 
                 SqlParameter paramFirstName = new SqlParameter();
                 paramFirstName.ParameterName = "@FirstName";
-                paramFirstName.Value = players.FirstName;
+                paramFirstName.Value = players.FirstName.ToUpper();
                 cmd.Parameters.Add(paramFirstName);
 
                 SqlParameter paramLastName = new SqlParameter();
                 paramLastName.ParameterName = "@LastName";
-                paramLastName.Value = players.LastName;
+                paramLastName.Value = players.LastName.ToUpper();
                 cmd.Parameters.Add(paramLastName);
 
                 SqlParameter paramBirthDate = new SqlParameter();
@@ -58,5 +58,22 @@ namespace Camarillo_Tennis_Club.Models
                     return ds;
                 }
             }
+
+        public DataSet GetPlayersDetails()
+        {
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spGetAllPlayers", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                con.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds;
+            }
         }
+    }
 }

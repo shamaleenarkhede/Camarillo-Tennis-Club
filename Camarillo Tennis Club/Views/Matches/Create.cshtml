@@ -30,7 +30,6 @@
             @Html.LabelFor(model => model.MatchDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.MatchDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-             @*   @Html.EditorFor(model => model.MatchDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.MatchDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @id = "ddlPlayer-1",onchanage = "test3()", @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,7 +45,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new { @id = "ddlPlayer-2", @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new {@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -116,7 +115,7 @@
 }
 
 <div>
-  @*  @Html.ActionLink("Back to List", "Index")*@
+    @Html.ActionLink("Back to Home Page", "Index", "Home")
 </div>
 
 @section Scripts {

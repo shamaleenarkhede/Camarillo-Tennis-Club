@@ -17,7 +17,21 @@ namespace Camarillo_Tennis_Club.Controllers
         // GET: Players
         public ActionResult Index()
         {
-            return View();
+            PlayersDBContext playersDBContext = new PlayersDBContext();
+            DataSet dsPlayers = new DataSet();
+            dsPlayers = playersDBContext.GetPlayers();
+            Players players = new Players();
+            List<Players> playersList = new List<Players>();
+            for (int i = 0; i < dsPlayers.Tables[0].Rows.Count; i++)
+            {
+                players = new Players();
+                players.FirstName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["FirstName"]);
+                players.LastName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["LastName"]);
+                players.BDate = Convert.ToDateTime(Convert.ToString(dsPlayers.Tables[0].Rows[i]["BirthDate"]));
+                playersList.Add(players);
+            }
+            players.playersList = playersList;
+            return View(players);
         }
 
         // GET: Players/Details/5

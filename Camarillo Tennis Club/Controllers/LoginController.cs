@@ -109,7 +109,7 @@ namespace Camarillo_Tennis_Club.Controllers
                 return View();
             }
             else
-            { return View("Login"); }
+            { return RedirectToAction("Index","Matches"); }
         }
 
 
