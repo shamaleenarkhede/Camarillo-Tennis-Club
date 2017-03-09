@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Camarillo_Tennis_Club.Models;
+using System.Web.Helpers;
+using System.Data;
 
 namespace Camarillo_Tennis_Club.Controllers
 {
@@ -55,9 +57,9 @@ namespace Camarillo_Tennis_Club.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
+         
             return View();
         }
 
@@ -66,29 +68,33 @@ namespace Camarillo_Tennis_Club.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(Login login)
         {
+            string Userrole = "";
             if (!ModelState.IsValid)
             {
-                return View(model);
+                LoginDBContext loginDBContext = new LoginDBContext();
+                DataSet ds = new DataSet();
+                ds = loginDBContext.getPassword(login.Username);
+                var hashedPassword = Convert.ToString(ds.Tables[0].Rows[0]["UserPassword"]);
+                var doesPasswordMatch = Crypto.VerifyHashedPassword(hashedPassword, login.UserPassword);
+                if(doesPasswordMatch)
+                {
+                   Userrole = Convert.ToString(ds.Tables[0].Rows[0]["Userrole"]);
+                   Session["Role"] = Userrole;
+                    return RedirectToAction("AdminHome");
+                }
+                else
+                {
+                    Session["Role"] = "User";
+                    return RedirectToAction("Index", "Matches");
+                }
+               
+                
+               // return View(login);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            return View();
         }
 
         //
@@ -147,31 +153,23 @@ namespace Camarillo_Tennis_Club.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(Login login)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                LoginDBContext loginDBContext = new LoginDBContext();
+                var hashedpassword = Crypto.HashPassword(login.UserPassword);
+                login.Userrole = "Admin";
+                login.UserPassword = hashedpassword;
+                loginDBContext.InsertUserDetails(login);
             }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                
+            return View(login);
         }
 
+        public ActionResult AdminHome() {
+            return View();
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

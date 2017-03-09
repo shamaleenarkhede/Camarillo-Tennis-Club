@@ -20,12 +20,12 @@
                 @Html.ActionLink("Camarillo Tennis Club", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Matches", "Index", "Matches")</li>
-                    <li>@Html.ActionLink("Scores", "Score", "Score")</li>
-                    <li>@Html.ActionLink("Players", "Create", "Players")</li>
+                    <li> @Html.ActionLink("Search for Score Cards", "Search", "Matches") </li>
+                    @* <li>@Html.ActionLink("Players", "Create", "Players")</li>*@
                 </ul>
-                @Html.Partial("_LoginPartial")
+             @*   @Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>

@@ -8,8 +8,7 @@
 
 
 <p>
-    @Html.ActionLink("Search for Score Cards", "Search") |
-    @Html.ActionLink("Create New Match", "Create")
+    @*@Html.ActionLink("Search for Score Cards", "Search")*@ 
 </p>
 <table class="table">
     <tr>
@@ -44,8 +43,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
-            @Html.ActionLink("View Score Card", "Details","Scores", new { id=item.MatchID },null) 
-        @*    @Html.ActionLink("Delete", "Delete", new { id=item.MatchID })*@
+            @Html.ActionLink("View Score Card", "Details","Scores", new { id=item.MatchID },null)
         </td>
     </tr>
 }

@@ -35,65 +35,73 @@ namespace Camarillo_Tennis_Club.Controllers
         }
 
         // GET: Matches/Create
+       // [Authorize]
         public ActionResult Create()
         {
-            // Populate the dropdownlists
-            Matches matches = new Matches();
-            matches.playerNames = getPlayersList();
-            matches.MatchDate = DateTime.Now;
+            if (Convert.ToString(Session["Role"]) == "Admin")
+            {
+                // Populate the dropdownlists
+                Matches matches = new Matches();
+                matches.playerNames = getPlayersList();
+                matches.MatchDate = DateTime.Now;
 
-            matches.set1ScoreList = new List<Score> {
-                new Score {Set1Score = 0, ScoreValue = 0 },
-                new Score {Set1Score = 1, ScoreValue = 1 },
-                new Score {Set1Score = 2, ScoreValue = 2 },
-                new Score {Set1Score = 3, ScoreValue = 3 },
-                new Score {Set1Score = 4, ScoreValue = 4 },
-                new Score {Set1Score = 5, ScoreValue = 5 },
-                new Score {Set1Score = 6, ScoreValue = 6 },
-                new Score {Set1Score = 7, ScoreValue = 7 },
+                matches.set1ScoreList = new List<Score> {
+                new Score {ID = 0, Set1Score = 0 },
+                new Score {ID = 1, Set1Score = 1 },
+                new Score {ID = 2, Set1Score = 2 },
+                new Score {ID = 3, Set1Score = 3 },
+                new Score {ID = 4, Set1Score = 4 },
+                new Score {ID = 5, Set1Score = 5 },
+                new Score {ID = 6, Set1Score = 6 },
+                new Score {ID = 7, Set1Score = 7 },
             };
 
-            matches.set2ScoreList = new List<Score> {
-                new Score {Set2Score = 0, ScoreValue = 0 },
-                new Score {Set2Score = 1, ScoreValue = 1 },
-                new Score {Set2Score = 2, ScoreValue = 2 },
-                new Score {Set2Score = 3, ScoreValue = 3 },
-                new Score {Set2Score = 4, ScoreValue = 4 },
-                new Score {Set2Score = 5, ScoreValue = 5 },
-                new Score {Set2Score = 6, ScoreValue = 6 },
-                new Score {Set2Score = 7, ScoreValue = 7 },
+                matches.set2ScoreList = new List<Score> {
+                new Score {ID = 0, Set2Score = 0 },
+                new Score {ID = 1, Set2Score = 1 },
+                new Score {ID = 2, Set2Score = 2 },
+                new Score {ID = 3, Set2Score = 3 },
+                new Score {ID = 4, Set2Score = 4 },
+                new Score {ID = 5, Set2Score = 5 },
+                new Score {ID = 6, Set2Score = 6 },
+                new Score {ID = 7, Set2Score = 7 },
             };
 
-            matches.set3ScoreList = new List<Score> {
-                new Score {Set3Score = 0, ScoreValue = 0 },
-                new Score {Set3Score = 1, ScoreValue = 1 },
-                new Score {Set3Score = 2, ScoreValue = 2 },
-                new Score {Set3Score = 3, ScoreValue = 3 },
-                new Score {Set3Score = 4, ScoreValue = 4 },
-                new Score {Set3Score = 5, ScoreValue = 5 },
-                new Score {Set3Score = 6, ScoreValue = 6 },
-                new Score {Set3Score = 7, ScoreValue = 7 },
+                matches.set3ScoreList = new List<Score> {
+                new Score {ID = 0, Set3Score = 0 },
+                new Score {ID = 1, Set3Score = 1 },
+                new Score {ID = 2, Set3Score = 2 },
+                new Score {ID = 3, Set3Score = 3 },
+                new Score {ID = 4, Set3Score = 4 },
+                new Score {ID = 5, Set3Score = 5 },
+                new Score {ID = 6, Set3Score = 6 },
+                new Score {ID = 7, Set3Score = 7 },
             };
 
-            //AddNewMatchViewModel addNewMatchViewModel = new AddNewMatchViewModel();
-            //addNewMatchViewModel.playerNames = getPlayersList();
+                //AddNewMatchViewModel addNewMatchViewModel = new AddNewMatchViewModel();
+                //addNewMatchViewModel.playerNames = getPlayersList();
 
-            //var list = new SelectList(new[]
-            //{
-            //    new { ID = "0", Name = "0" },
-            //    new { ID = "1", Name = "1" },
-            //    new { ID = "2", Name = "2" },
-            //    new { ID = "3", Name = "3" },
-            //    new { ID = "4", Name = "4" },
-            //    new { ID = "5", Name = "5" },
-            //    new { ID = "6", Name = "6" },
-            //    new { ID = "7", Name = "7" }
-            //},
-            //    "ID", "Name",0);
+                //var list = new SelectList(new[]
+                //{
+                //    new { ID = "0", Name = "0" },
+                //    new { ID = "1", Name = "1" },
+                //    new { ID = "2", Name = "2" },
+                //    new { ID = "3", Name = "3" },
+                //    new { ID = "4", Name = "4" },
+                //    new { ID = "5", Name = "5" },
+                //    new { ID = "6", Name = "6" },
+                //    new { ID = "7", Name = "7" }
+                //},
+                //    "ID", "Name",0);
 
-            //ViewData["list"] = list;
+                //ViewData["list"] = list;
 
-            return View(matches);
+                return View(matches);
+            }
+            else
+            {
+                return View("~/Views/PageNotFound.cshtml");
+            }
         }
 
         // POST: Matches/Create
@@ -115,38 +123,37 @@ namespace Camarillo_Tennis_Club.Controllers
             else
             {
                 matches.set1ScoreList = new List<Score> {
-                new Score {Set1Score = 0, ScoreValue = 0 },
-                new Score {Set1Score = 1, ScoreValue = 1 },
-                new Score {Set1Score = 2, ScoreValue = 2 },
-                new Score {Set1Score = 3, ScoreValue = 3 },
-                new Score {Set1Score = 4, ScoreValue = 4 },
-                new Score {Set1Score = 5, ScoreValue = 5 },
-                new Score {Set1Score = 6, ScoreValue = 6 },
-                new Score {Set1Score = 7, ScoreValue = 7 },
+                new Score {ID = 0, Set1Score = 0 },
+                new Score {ID = 1, Set1Score = 1 },
+                new Score {ID = 2, Set1Score = 2 },
+                new Score {ID = 3, Set1Score = 3 },
+                new Score {ID = 4, Set1Score = 4 },
+                new Score {ID = 5, Set1Score = 5 },
+                new Score {ID = 6, Set1Score = 6 },
+                new Score {ID = 7, Set1Score = 7 },
             };
 
                 matches.set2ScoreList = new List<Score> {
-                new Score {Set2Score = 0, ScoreValue = 0 },
-                new Score {Set2Score = 1, ScoreValue = 1 },
-                new Score {Set2Score = 2, ScoreValue = 2 },
-                new Score {Set2Score = 3, ScoreValue = 3 },
-                new Score {Set2Score = 4, ScoreValue = 4 },
-                new Score {Set2Score = 5, ScoreValue = 5 },
-                new Score {Set2Score = 6, ScoreValue = 6 },
-                new Score {Set2Score = 7, ScoreValue = 7 },
+                new Score {ID = 0, Set2Score = 0 },
+                new Score {ID = 1, Set2Score = 1 },
+                new Score {ID = 2, Set2Score = 2 },
+                new Score {ID = 3, Set2Score = 3 },
+                new Score {ID = 4, Set2Score = 4 },
+                new Score {ID = 5, Set2Score = 5 },
+                new Score {ID = 6, Set2Score = 6 },
+                new Score {ID = 7, Set2Score = 7 },
             };
 
                 matches.set3ScoreList = new List<Score> {
-                new Score {Set3Score = 0, ScoreValue = 0 },
-                new Score {Set3Score = 1, ScoreValue = 1 },
-                new Score {Set3Score = 2, ScoreValue = 2 },
-                new Score {Set3Score = 3, ScoreValue = 3 },
-                new Score {Set3Score = 4, ScoreValue = 4 },
-                new Score {Set3Score = 5, ScoreValue = 5 },
-                new Score {Set3Score = 6, ScoreValue = 6 },
-                new Score {Set3Score = 7, ScoreValue = 7 },
+                new Score {ID = 0, Set3Score = 0 },
+                new Score {ID = 1, Set3Score = 1 },
+                new Score {ID = 2, Set3Score = 2 },
+                new Score {ID = 3, Set3Score = 3 },
+                new Score {ID = 4, Set3Score = 4 },
+                new Score {ID = 5, Set3Score = 5 },
+                new Score {ID = 6, Set3Score = 6 },
+                new Score {ID = 7, Set3Score = 7 },
             };
-
 
                 matches.playerNames = getPlayersList();
                 return View(matches);
@@ -158,65 +165,72 @@ namespace Camarillo_Tennis_Club.Controllers
         // GET: Matches/Edit/5
         public ActionResult Edit(int id)
         {
-            TempData["MatchID"] = id;
-            Matches matches = new Matches();
-            
-            matches.set1ScoreList = new List<Score> {
-                new Score {Set1Score = 0, ScoreValue = 0 },
-                new Score {Set1Score = 1, ScoreValue = 1 },
-                new Score {Set1Score = 2, ScoreValue = 2 },
-                new Score {Set1Score = 3, ScoreValue = 3 },
-                new Score {Set1Score = 4, ScoreValue = 4 },
-                new Score {Set1Score = 5, ScoreValue = 5 },
-                new Score {Set1Score = 6, ScoreValue = 6 },
-                new Score {Set1Score = 7, ScoreValue = 7 },
-            };
-
-            matches.set2ScoreList = new List<Score> {
-                new Score {Set2Score = 0, ScoreValue = 0 },
-                new Score {Set2Score = 1, ScoreValue = 1 },
-                new Score {Set2Score = 2, ScoreValue = 2 },
-                new Score {Set2Score = 3, ScoreValue = 3 },
-                new Score {Set2Score = 4, ScoreValue = 4 },
-                new Score {Set2Score = 5, ScoreValue = 5 },
-                new Score {Set2Score = 6, ScoreValue = 6 },
-                new Score {Set2Score = 7, ScoreValue = 7 },
-            };
-
-            matches.set3ScoreList = new List<Score> {
-                new Score {Set3Score = 0, ScoreValue = 0 },
-                new Score {Set3Score = 1, ScoreValue = 1 },
-                new Score {Set3Score = 2, ScoreValue = 2 },
-                new Score {Set3Score = 3, ScoreValue = 3 },
-                new Score {Set3Score = 4, ScoreValue = 4 },
-                new Score {Set3Score = 5, ScoreValue = 5 },
-                new Score {Set3Score = 6, ScoreValue = 6 },
-                new Score {Set3Score = 7, ScoreValue = 7 },
-            };
-
-            List<Score> scoresList = new List<Score>();
-            ScoresDBContext scoresDBContext = new ScoresDBContext();
-            DataSet dsMatchPlayerScores = new DataSet();
-            dsMatchPlayerScores = scoresDBContext.GetMatchPlayersScores(id);
-            matches.playerNames = getPlayersList();
-            matches.Location = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Location"]);
-            matches.MatchDate = Convert.ToDateTime(dsMatchPlayerScores.Tables[0].Rows[0]["MatchDate"]);
-            matches.Player1ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player1ID"]);
-            matches.Player2ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player2ID"]);
-            matches.WinnerID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerID"]);
-            matches.Player1Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player1Name"]);
-            matches.Player2Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player2Name"]);
-            matches.WinnerName = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerName"]);
-            for (int i = 0; i < dsMatchPlayerScores.Tables[0].Rows.Count; i++)
+            if (Convert.ToString(Session["Role"]) == "Admin")
             {
-                Score score = new Score();
-                score.Set1Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set1Score"]);
-                score.Set2Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set2Score"]);
-                score.Set3Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set3Score"]);
-                scoresList.Add(score);
+                TempData["MatchID"] = id;
+                Matches matches = new Matches();
+
+                matches.set1ScoreList = new List<Score> {
+                new Score {ID = 0, Set1Score = 0 },
+                new Score {ID = 1, Set1Score = 1 },
+                new Score {ID = 2, Set1Score = 2 },
+                new Score {ID = 3, Set1Score = 3 },
+                new Score {ID = 4, Set1Score = 4 },
+                new Score {ID = 5, Set1Score = 5 },
+                new Score {ID = 6, Set1Score = 6 },
+                new Score {ID = 7, Set1Score = 7 },
+            };
+
+                matches.set2ScoreList = new List<Score> {
+                new Score {ID = 0, Set2Score = 0 },
+                new Score {ID = 1, Set2Score = 1 },
+                new Score {ID = 2, Set2Score = 2 },
+                new Score {ID = 3, Set2Score = 3 },
+                new Score {ID = 4, Set2Score = 4 },
+                new Score {ID = 5, Set2Score = 5 },
+                new Score {ID = 6, Set2Score = 6 },
+                new Score {ID = 7, Set2Score = 7 },
+            };
+
+                matches.set3ScoreList = new List<Score> {
+                new Score {ID = 0, Set3Score = 0 },
+                new Score {ID = 1, Set3Score = 1 },
+                new Score {ID = 2, Set3Score = 2 },
+                new Score {ID = 3, Set3Score = 3 },
+                new Score {ID = 4, Set3Score = 4 },
+                new Score {ID = 5, Set3Score = 5 },
+                new Score {ID = 6, Set3Score = 6 },
+                new Score {ID = 7, Set3Score = 7 },
+            };
+
+                List<Score> scoresList = new List<Score>();
+                ScoresDBContext scoresDBContext = new ScoresDBContext();
+                DataSet dsMatchPlayerScores = new DataSet();
+                dsMatchPlayerScores = scoresDBContext.GetMatchPlayersScores(id);
+                matches.playerNames = getPlayersList();
+                matches.Location = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Location"]);
+                matches.MatchDate = Convert.ToDateTime(dsMatchPlayerScores.Tables[0].Rows[0]["MatchDate"]);
+                matches.Player1ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player1ID"]);
+                matches.Player2ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player2ID"]);
+                matches.WinnerID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerID"]);
+                matches.Player1Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player1Name"]);
+                matches.Player2Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player2Name"]);
+                matches.WinnerName = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerName"]);
+                for (int i = 0; i < dsMatchPlayerScores.Tables[0].Rows.Count; i++)
+                {
+                    Score score = new Score();
+                    score.Set1Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set1Score"]);
+                    score.Set2Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set2Score"]);
+                    score.Set3Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set3Score"]);
+                    scoresList.Add(score);
+                }
+                matches.scoreList = scoresList;
+                return View(matches);
             }
-            matches.scoreList = scoresList;
-            return View(matches);
+            else
+            {
+                return View("~/Views/PageNotFound.cshtml");
+            }
         }
 
         // POST: Matches/Edit/5

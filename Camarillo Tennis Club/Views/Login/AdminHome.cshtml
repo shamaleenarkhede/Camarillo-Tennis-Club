@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "AdminHome";
+}
+
+<h2>AdminHome</h2>
+
+<h4>Welcome ADMIN !!!!!</h4>
+
+
+<div class="form-group">
+
+    <div class="col-md-10">
+        @Html.ActionLink("Edit Matches", "Index", "Matches")
+    </div>
+
+    <div class="col-md-10">
+        @Html.ActionLink("Add Matches", "Create", "Matches")
+    </div>
+    @*<div class="col-md-10">
+        @Html.ActionLink("Edit Matches", "Edit", "Matches")
+    </div>*@
+
+    <div class="col-md-10">
+        @Html.ActionLink("Add Players", "Create", "Players")
+
+    </div>
+</div>
+
+
+
