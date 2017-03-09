@@ -11,10 +11,11 @@ namespace Camarillo_Tennis_Club.Models
 {
     public class PlayersDBContext
     {
-            public int InsertPlayerDetails(Players players)
-            {
-                string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
+        string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
 
+        public int InsertPlayerDetails(Players players)
+            {
+              
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                 SqlCommand cmd = new SqlCommand("spInsertPlayers", con);
@@ -43,8 +44,7 @@ namespace Camarillo_Tennis_Club.Models
 
               public DataSet GetPlayers()
               {
-                string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+            
                  using (SqlConnection con = new SqlConnection(connectionString))
                  {
                     SqlCommand cmd = new SqlCommand("spGetPlayers", con);

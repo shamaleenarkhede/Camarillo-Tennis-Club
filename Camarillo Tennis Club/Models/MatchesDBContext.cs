@@ -10,11 +10,11 @@ namespace Camarillo_Tennis_Club.Models
 {
     public class MatchesDBContext
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
 
         public int InsertMatchDetails(Matches matches)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+           
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("spInsertMatches", con);
@@ -47,12 +47,8 @@ namespace Camarillo_Tennis_Club.Models
                 paramWinnerID.ParameterName = "@WinnerID";
                 paramWinnerID.Value = matches.WinnerID;
                 cmd.Parameters.Add(paramWinnerID);
-
-                //var returnParameter = cmd.Parameters.Add("@RetVal", SqlDbType.Int);
-                //returnParameter.Direction = ParameterDirection.ReturnValue;
-
                 con.Open();
-                //  cmd.ExecuteNonQuery();
+
                 int result = (int)cmd.ExecuteScalar(); 
 
                 return result;
@@ -61,11 +57,9 @@ namespace Camarillo_Tennis_Club.Models
 
         public int UpdateMatchDetails(Matches matches)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spInsertMatches", con);
+                SqlCommand cmd = new SqlCommand("spUpdateMatchDetails", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter paramLocation = new SqlParameter();
@@ -95,7 +89,12 @@ namespace Camarillo_Tennis_Club.Models
                 paramWinnerID.ParameterName = "@WinnerID";
                 paramWinnerID.Value = matches.WinnerID;
                 cmd.Parameters.Add(paramWinnerID);
-                
+
+                SqlParameter paramMatchID = new SqlParameter();
+                paramMatchID.ParameterName = "@MatchID";
+                paramMatchID.Value = matches.MatchID;
+                cmd.Parameters.Add(paramMatchID);
+
                 con.Open();
                 int result = cmd.ExecuteNonQuery();
 
@@ -106,7 +105,6 @@ namespace Camarillo_Tennis_Club.Models
 
         public DataSet GetMatchesPlayers()
             {
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -124,8 +122,7 @@ namespace Camarillo_Tennis_Club.Models
 
         public DataSet GetMatchUsingSearchString(string SearchString)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+          
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("spGetMatchesUsingSearchString", con);

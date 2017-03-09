@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Camarillo_Tennis_Club.Models;
 using System.Data;
 using System.Web.Helpers;
+using Camarillo_Tennis_Club.CustomFilter;
+
 
 namespace Camarillo_Tennis_Club.Controllers
 {
@@ -22,33 +24,42 @@ namespace Camarillo_Tennis_Club.Controllers
 
         //
         // POST: /Account/Login
+        [ExceptionHandler]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(Login login)
         {
-            string Userrole = "";
-            if (!ModelState.IsValid)
+            try
             {
-                LoginDBContext loginDBContext = new LoginDBContext();
-                DataSet ds = new DataSet();
-                ds = loginDBContext.getPassword(login.Username);
-                var hashedPassword = Convert.ToString(ds.Tables[0].Rows[0]["UserPassword"]);
-                var doesPasswordMatch = Crypto.VerifyHashedPassword(hashedPassword, login.UserPassword);
-                if (doesPasswordMatch)
+                string Userrole = "";
+                if (!ModelState.IsValid)
                 {
-                    Userrole = Convert.ToString(ds.Tables[0].Rows[0]["Userrole"]);
-                    Session["Role"] = Userrole;
-                    return RedirectToAction("AdminHome");
-                }
-                else
-                {
-                    Session["Role"] = "User";
-                    return RedirectToAction("Index", "Matches");
-                }
+                    LoginDBContext loginDBContext = new LoginDBContext();
+                    DataSet ds = new DataSet();
+                    ds = loginDBContext.getPassword(login.Username);
+                    var hashedPassword = Convert.ToString(ds.Tables[0].Rows[0]["UserPassword"]);
+                    var doesPasswordMatch = Crypto.VerifyHashedPassword(hashedPassword, login.UserPassword);
+                    if (doesPasswordMatch)
+                    {
+                        Userrole = Convert.ToString(ds.Tables[0].Rows[0]["Userrole"]);
+                        Session["Role"] = Userrole;
+                        return RedirectToAction("AdminHome");
+                    }
+                    else
+                    {
+                        Session["Role"] = "User";
+                        return RedirectToAction("Index", "Matches");
+                    }
 
 
-                // return View(login);
+                    // return View(login);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Login", "Login"));
+               // return View("Error");
             }
 
             return View();
@@ -64,20 +75,28 @@ namespace Camarillo_Tennis_Club.Controllers
 
         //
         // POST: /Account/Register
+        [ExceptionHandler]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(Login login)
         {
-            if (ModelState.IsValid)
+            try
             {
-                LoginDBContext loginDBContext = new LoginDBContext();
-                var hashedpassword = Crypto.HashPassword(login.UserPassword);
-                login.Userrole = "Admin";
-                login.UserPassword = hashedpassword;
-                loginDBContext.InsertUserDetails(login);
-                Session["Role"] = "Admin";
-                return RedirectToAction("AdminHome");
+                if (ModelState.IsValid)
+                {
+                    LoginDBContext loginDBContext = new LoginDBContext();
+                    var hashedpassword = Crypto.HashPassword(login.UserPassword);
+                    login.Userrole = "Admin";
+                    login.UserPassword = hashedpassword;
+                    loginDBContext.InsertUserDetails(login);
+                    Session["Role"] = "Admin";
+                    return RedirectToAction("AdminHome");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Login", "Register"));
             }
 
             return View();

@@ -10,12 +10,12 @@ namespace Camarillo_Tennis_Club.Models
 {
     public class ScoresDBContext
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
 
         public int InsertScores(Matches matches)
         {
             int result = 0, PlayerID = 0;
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+           
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 for (int i = 0; i < matches.scoreList.Count; i++)
@@ -68,8 +68,7 @@ namespace Camarillo_Tennis_Club.Models
         public int UpdateScores(Matches matches)
         {
             int result = 0, PlayerID = 0;
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+          
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 for (int i = 0; i < matches.scoreList.Count; i++)
@@ -122,8 +121,7 @@ namespace Camarillo_Tennis_Club.Models
 
         public DataSet GetMatchPlayersScores(int MatchID)
             {
-            string connectionString = ConfigurationManager.ConnectionStrings["CamarilloTennisClub"].ConnectionString;
-
+         
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("spGetMatchPlayersScores", con);

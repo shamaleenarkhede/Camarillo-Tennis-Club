@@ -32,7 +32,7 @@ namespace Camarillo_Tennis_Club.Models
         public int Set2Score { get; set; }
         public int Set3Score { get; set; }
 
-        //    public List<Players> playersList { get; set; }
+        public List<Players> playersList { get; set; }
 
     }
 

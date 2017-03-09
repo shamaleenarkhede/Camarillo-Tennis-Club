@@ -180,24 +180,19 @@
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\ScoresController.cs" />
+    <Compile Include="CustomFilter\ExceptionHandlerAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703061940000_ComplexDataModel.cs" />
-    <Compile Include="Migrations\201703061940000_ComplexDataModel.Designer.cs">
-      <DependentUpon>201703061940000_ComplexDataModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ExceptionDBContext.cs" />
+    <Compile Include="Models\ExceptionLogger.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginDBContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Matches.cs" />
     <Compile Include="Models\MatchesDBContext.cs" />
-    <Compile Include="Models\MatchesViewModel.cs" />
-    <Compile Include="Models\MatchParentModel.cs" />
-    <Compile Include="Models\MatchResultContext.cs" />
-    <Compile Include="Models\MatchResultInitializer.cs" />
     <Compile Include="Models\Players.cs" />
     <Compile Include="Models\PlayersDBContext.cs" />
     <Compile Include="Models\Score.cs" />
@@ -349,6 +344,10 @@
     <Content Include="Views\Login\AdminHome.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\PageNotFound.cshtml" />
+    <Content Include="Views\Login\Error.cshtml" />
+    <Content Include="Views\Matches\Error.cshtml" />
+    <Content Include="Views\Players\Error.cshtml" />
+    <Content Include="Views\Scores\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,11 +358,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703061940000_ComplexDataModel.resx">
-      <DependentUpon>201703061940000_ComplexDataModel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
