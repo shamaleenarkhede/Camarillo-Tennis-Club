@@ -349,6 +349,10 @@
     <Content Include="Views\Matches\Error.cshtml" />
     <Content Include="Views\Players\Error.cshtml" />
     <Content Include="Views\Scores\Error.cshtml" />
+    <Content Include="Views\Login\Logout.cshtml" />
+    <Content Include="Views\Matches\Save.cshtml" />
+    <Content Include="Views\Players\RecordExists.cshtml" />
+    <Content Include="Views\Players\Save.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,7 +15,6 @@ namespace Camarillo_Tennis_Club.Models
 
         public int InsertPlayerDetails(Players players)
             {
-              
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                 SqlCommand cmd = new SqlCommand("spInsertPlayers", con);
@@ -75,5 +74,46 @@ namespace Camarillo_Tennis_Club.Models
                 return ds;
             }
         }
-    }
+
+        public int CheckPlayerExists(Players players)
+        {
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spCheckPlayerExists", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter paramFirstName = new SqlParameter();
+                paramFirstName.ParameterName = "@FirstName";
+                paramFirstName.Value = players.FirstName;//.ToUpper();
+                cmd.Parameters.Add(paramFirstName);
+
+                SqlParameter paramLastName = new SqlParameter();
+                paramLastName.ParameterName = "@LastName";
+                paramLastName.Value = players.LastName;//.ToUpper();
+                cmd.Parameters.Add(paramLastName);
+
+
+                SqlParameter paramBirthDate = new SqlParameter();
+                paramBirthDate.ParameterName = "@BirthDate";
+                paramBirthDate.Value = players.BDate;
+                cmd.Parameters.Add(paramBirthDate);
+
+                con.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                int result = 0;
+               result = ds.Tables[0].Rows.Count;
+                if(result >= 1)
+                { return result; }
+                else {
+                    return result;
+                }
+               
+                
+            }
+        }
+        }
 }

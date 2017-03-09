@@ -85,7 +85,11 @@ namespace Camarillo_Tennis_Club.Controllers
                 int MatchID=matchesDBContext.InsertMatchDetails(matches);
                 matches.MatchID = MatchID;
                 ScoresDBContext scoresDBContext = new ScoresDBContext();
-                scoresDBContext.InsertScores(matches);
+                 int result = scoresDBContext.InsertScores(matches);
+                    if(result == 1 || result == -1)
+                    {
+                       return RedirectToAction("Save");
+                    }
                 return RedirectToAction("Index");
             }
             else
@@ -160,7 +164,11 @@ namespace Camarillo_Tennis_Club.Controllers
                     ScoresDBContext scoresDBContext = new ScoresDBContext();
                     scoresDBContext.UpdateScores(matches);
                     MatchesDBContext matchesDBContext = new MatchesDBContext();
-                    matchesDBContext.UpdateMatchDetails(matches);
+                    int result = matchesDBContext.UpdateMatchDetails(matches);
+                    if (result == 1)
+                    {
+                        return RedirectToAction("Save");
+                    }
                     return RedirectToAction("Index");
                 }
                 return View(matches);
@@ -294,6 +302,11 @@ namespace Camarillo_Tennis_Club.Controllers
                 return View("Error", new HandleErrorInfo(ex, "Matches", "Search"));
             }
 
+        }
+
+        public ActionResult Save()
+        {
+            return View();
         }
        
 

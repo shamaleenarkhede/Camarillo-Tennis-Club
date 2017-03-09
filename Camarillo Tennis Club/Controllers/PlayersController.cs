@@ -19,12 +19,13 @@ namespace Camarillo_Tennis_Club.Controllers
         {
             PlayersDBContext playersDBContext = new PlayersDBContext();
             DataSet dsPlayers = new DataSet();
-            dsPlayers = playersDBContext.GetPlayers();
+            dsPlayers = playersDBContext.GetPlayersDetails();
             Players players = new Players();
             List<Players> playersList = new List<Players>();
             for (int i = 0; i < dsPlayers.Tables[0].Rows.Count; i++)
             {
                 players = new Players();
+                players.PlayerID = Convert.ToInt32(dsPlayers.Tables[0].Rows[i]["PlayerID"]);
                 players.FirstName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["FirstName"]);
                 players.LastName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["LastName"]);
                 players.BDate = Convert.ToDateTime(Convert.ToString(dsPlayers.Tables[0].Rows[i]["BirthDate"]));
@@ -35,15 +36,11 @@ namespace Camarillo_Tennis_Club.Controllers
         }
 
         // GET: Players/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-         
-            return View();
-        }
+        //public ActionResult Edit(int id)
+        //{
+           
+        //    return View();
+        //}
 
         // GET: Players/Create
         public ActionResult Create()
@@ -64,8 +61,19 @@ namespace Camarillo_Tennis_Club.Controllers
                 if (ModelState.IsValid)
                 {
                     PlayersDBContext playersDBContext = new PlayersDBContext();
-                    playersDBContext.InsertPlayerDetails(players);
-                    return RedirectToAction("Index");
+                    int exists = playersDBContext.CheckPlayerExists(players);
+                    if(exists == 1)
+                    {
+                        ViewBag.Text = "Player exists Already!!!!";
+                        return RedirectToAction("RecordExists");
+                       // return View();
+                    }
+                    else if (exists == 0)
+                    {
+                        int result = playersDBContext.InsertPlayerDetails(players);
+                        return RedirectToAction("Save");
+                    }
+                   
                 }
 
                 return View(players);
@@ -85,5 +93,16 @@ namespace Camarillo_Tennis_Club.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult RecordExists()
+        {
+            return View();
+        }
+
+        public ActionResult Save()
+        {
+            return View();
+        }
+
     }
 }

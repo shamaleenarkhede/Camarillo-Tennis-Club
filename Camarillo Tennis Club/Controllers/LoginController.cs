@@ -112,6 +112,14 @@ namespace Camarillo_Tennis_Club.Controllers
             { return RedirectToAction("Index","Matches"); }
         }
 
+        public ActionResult Logout()
+        {
+                Session.Remove("Role");
+                return View();
+          
+           
+        }
+
 
     }
 }
