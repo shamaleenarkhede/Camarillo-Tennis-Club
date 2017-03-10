@@ -19,7 +19,7 @@
 
 <h2>Search</h2>
 <div>
-    <h4>Matches</h4>
+    <h4>Search Score Cards</h4>
    
   
     @using (Html.BeginForm())
@@ -30,57 +30,50 @@
             <hr />
             <div class="form-group">
                 @Html.Label("Search by using Location or Player Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                @* @Html.LabelFor(model => model.SearchString, htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-md-10">
-                 @*   @Html.RadioButton("LocationorPlayer", "Search by using Location or Player Name")*@
                     <input type="radio" id="chkLocation" name="SearchRadio" onclick="ShowHideDiv()" class="control-label col-md-2" />
 
                 </div>
             </div>
+
+            <div class="form-horizontal">
+                <div class="form-group" id="divLocation" style="display:none">
+                    @Html.LabelFor(model => model.SearchString, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SearchString, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SearchString, "", new { @class = "text-danger" })
+                        <input type="submit" id="btnSubmit" value="Search Matches" class="btn btn-default" />
+
+                    </div>
+                </div>
+
+            </div>
             <div class="form-horizontal">
                 <hr />
-                @Html.Label("Search by using Event Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group">
+                    @Html.Label("Search by using Event Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="radio" id="chkDate" name="SearchRadio" onclick="ShowHideDiv()" class="control-label col-md-2" />
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group" id="divEventDate" style="display:none">
+                        @Html.LabelFor(model => model.SearchDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SearchDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SearchDate, "", new { @class = "text-danger" })
+                            <input type="submit" id="btnSubmit" value="Search Matches" class="btn btn-default" />
+
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="col-md-10">
-                
-                 @*   @Html.RadioButton("EventDate", "Search by using Event Date")*@
-                    <input type="radio"id="chkDate" name="SearchRadio" onclick="ShowHideDiv()"  class="control-label col-md-2" />
-
-                    @*   <input type="submit" value="Search Matches" onclick="location.href='@Url.Action("SearchResults", "Matches")'" class="btn btn-default" />*@
-
+                    @Html.ActionLink("Back to List", "Index")
                 </div>
+
             </div>
-
-            <div class="form-group" id="divLocation" style="display:none">
-                @Html.LabelFor(model => model.SearchString, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SearchString, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SearchString, "", new { @class = "text-danger" })
-                    <input type="submit" id="btnSubmit" value="Search Matches" class="btn btn-default"/>
-
-                </div>
-            </div>
-
-            <div class="form-group" id="divEventDate" style="display:none">
-                @Html.LabelFor(model => model.SearchDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SearchDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SearchDate, "", new { @class = "text-danger" })
-                    <input type="submit" id="btnSubmit" value="Search Matches" class="btn btn-default" />
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <div class="form-actions no-color">
-                 
-                </div>
-            </div>
-            <div class="col-md-10">
-
-
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-
         </div>
     }
     </div>

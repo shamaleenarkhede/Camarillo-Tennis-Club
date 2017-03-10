@@ -202,6 +202,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Validation Attributes\NotEqualTo.cs" />
     <Compile Include="Validation Attributes\ValidMatchDate.cs" />
+    <Compile Include="Validation Attributes\WinnerEqualTo.cs" />
+    <Compile Include="Validation Attributes\WinnerEqualToPlayer2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client Scripts\mvcfoolproof.unobtrusive.js" />
@@ -212,11 +214,16 @@
     <Content Include="Client Scripts\MvcFoolproofValidation.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\images1.jpg" />
+    <Content Include="Content\img\images2.jpeg" />
+    <Content Include="Content\img\images3.png" />
+    <Content Include="Content\img\images4.jpg" />
+    <Content Include="Content\img\images5.jpg" />
+    <Content Include="Content\img\Tennis Racquet1.jpg" />
     <Content Include="Content\img\Tennis Racquet2.jpg" />
     <Content Include="Content\img\Tennis Racquet5.jpg" />
     <Content Include="Content\img\Tennis Racquet4.jpg" />
     <Content Include="Content\img\Tennis Racquet3.jpg" />
-    <Content Include="Content\img\Tennis Racquet1.jpg" />
     <Content Include="Content\img\Tennis Racquet6.jpg" />
     <Content Include="Content\img\Tennis Racquet7.jpg" />
     <Content Include="Content\themes\base\accordion.css" />

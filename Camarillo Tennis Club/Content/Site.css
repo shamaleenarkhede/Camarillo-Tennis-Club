@@ -23,7 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-.fadein { position:relative; margin-top:50px; width:300px; height:300px; }
+.fadein { position:relative; left:0px; top:10px; margin-top:70px; width:1000px; height:600px;}
 .fadein img { position:absolute; left:0; top:0; }
 
 

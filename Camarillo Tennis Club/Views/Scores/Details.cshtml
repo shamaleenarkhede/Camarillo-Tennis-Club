@@ -26,13 +26,11 @@
                 </td>
             </tr>
             <tr>
-                <td class="td">
-                    @Html.DisplayFor(model => model.Player1Name)
-                </td>
-                <td colspan="2" class="td">
+                
+                <td colspan="4" class="td">
                     <table cellspacing="2" class="table">
                         <tr>
-                            <td></td>
+                            <td>Player Names</td>
 
                             <th>Set -1</th>
                             <th>Set -2</th>
@@ -62,9 +60,7 @@
                     </table>
 
                 </td>
-                <td class="td">
-                    @Html.DisplayFor(model => model.Player2Name)
-                </td>
+               
 
             </tr>
             <tr class="tr-head">
@@ -81,9 +77,11 @@
             </tr>*@
 </table>
     </div>
-
+   
     <div class="form-actions no-color">
         @Html.ActionLink("Back to Home Page", "Index", "Home")
-        @Html.ActionLink("Back to List", "Index","Matches")
     </div>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to Match List", "Index", "Matches")
+        </div>
 </div>

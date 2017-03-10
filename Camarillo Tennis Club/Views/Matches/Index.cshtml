@@ -6,25 +6,24 @@
 
 <h2>Index</h2>
 
-
 <p>
     @*@Html.ActionLink("Search for Score Cards", "Search")*@ 
 </p>
 <table class="table">
-    <tr>
-        <th>
+    <tr class="tr">
+        <th style="background-color:darksalmon">
             @Html.DisplayNameFor(model => model.MatchName)
         </th>
-        <th>
+        <th style="background-color:darksalmon">
             @Html.DisplayNameFor(model => model.Location)
         </th>
-        <th>
+        <th style="background-color:darksalmon">
             @Html.DisplayNameFor(model => model.MatchDate)
         </th>
-        <th>
+        <th style="background-color:darksalmon">
             @Html.DisplayName("Winner Name")
         </th>
-        <th></th>
+        <th style="background-color:darksalmon"></th>
     </tr>
 
 @foreach (var item in Model.matchesList) {

@@ -54,7 +54,7 @@
             @Html.LabelFor(model => model.WinnerID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Winner Player ---", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.WinnerID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.WinnerID, "Winner should be among one of the above selected players", new { @class = "text-danger" })
             </div>
         </div>
 

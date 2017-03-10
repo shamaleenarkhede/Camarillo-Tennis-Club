@@ -78,25 +78,29 @@ namespace Camarillo_Tennis_Club.Controllers
         public ActionResult Create(Matches matches)
         {
             try
-            { 
-            if (ModelState.IsValid)
             {
-                MatchesDBContext matchesDBContext = new MatchesDBContext();
-                int MatchID=matchesDBContext.InsertMatchDetails(matches);
-                matches.MatchID = MatchID;
-                ScoresDBContext scoresDBContext = new ScoresDBContext();
-                 int result = scoresDBContext.InsertScores(matches);
-                    if(result == 1 || result == -1)
+                if (matches.WinnerID == matches.Player1ID || matches.WinnerID == matches.Player2ID)
+                {
+                    if (ModelState.IsValid)
                     {
-                       return RedirectToAction("Save");
+                        MatchesDBContext matchesDBContext = new MatchesDBContext();
+                        int MatchID = matchesDBContext.InsertMatchDetails(matches);
+                        matches.MatchID = MatchID;
+                        ScoresDBContext scoresDBContext = new ScoresDBContext();
+                        int result = scoresDBContext.InsertScores(matches);
+                        if (result == 1 || result == -1)
+                        {
+                            return RedirectToAction("Save");
+                        }
                     }
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                matches.playerNames = getPlayersList();
-                return View(matches);
-            }
+                    return RedirectToAction("Index");
+                }
+              
+                else
+                {
+                    matches.playerNames = getPlayersList();
+                    return View(matches);
+                }
             }
             catch (Exception ex)
             {
