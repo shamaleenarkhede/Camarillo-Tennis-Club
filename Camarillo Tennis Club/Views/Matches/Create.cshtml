@@ -1,7 +1,4 @@
 ﻿@model Camarillo_Tennis_Club.Models.Matches
-
-
-
 @{
     ViewBag.Title = "Create";
 }
@@ -13,6 +10,41 @@
 {
 
     @Html.AntiForgeryToken()
+
+    <script type="text/javascript">
+    
+        function validateWinner() {
+            var selectedPlayer1 = document.getElementById("ddlPlayer1");
+            var selectPlayer2 = document.getElementById("ddlPlayer2");
+            var selectedWinner = document.getElementById("ddlWinner");
+            if(selectedWinner == selectedPlayer1 || selectedWinner == selectPlayer2)
+            {
+
+            }
+            else {
+                alert("Winner should be among one of the above selected players");
+            }
+        }
+    </script>
+    <script type="text/javascript">
+
+        function checkDate() {
+            var EnteredDate = document.getElementById("txtMatchDate").value; //for javascript
+            var date = EnteredDate.substring(0, 2);
+            var month = EnteredDate.substring(3, 5);
+            var year = EnteredDate.substring(6, 10);
+
+            var myDate = new Date(year, month - 1, date);
+
+            var today = new Date();
+
+            if (myDate <= today) {
+            }
+            else {
+               alert("Entered date is Greater than today's date. Please enter current date or past date ");
+            }
+        }
+    </script>
 
     <div class="form-horizontal">
         <h4>Matches</h4>
@@ -29,7 +61,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MatchDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.MatchDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.TextBoxFor(model => model.MatchDate, "{0:yyyy-MM-dd}", new { id = "txtMatchDate", @onchange = "checkDate();", @class = "form-control", type = "date" })
                 @Html.ValidationMessageFor(model => model.MatchDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,7 +69,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Player1ID, new SelectList(Model.playerNames, "PlayerID", "FullName"),"--- Select Player-1 ---" ,new {id="ddlPlayer1", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -45,7 +77,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new {@class = "form-control" })
+                @Html.DropDownListFor(model => model.Player2ID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Player-2 ---", new {id = "ddlPlayer2",@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2ID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,7 +85,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.WinnerID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Winner Player ---", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.WinnerID, new SelectList(Model.playerNames, "PlayerID", "FullName"), "--- Select Winner Player ---", new {id="ddlWinner", onchange = @"validateWinner();", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.WinnerID, "Winner should be among one of the above selected players", new { @class = "text-danger" })
             </div>
         </div>

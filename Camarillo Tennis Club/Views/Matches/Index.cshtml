@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.WinnerName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
+        @*    @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |*@
             @Html.ActionLink("View Score Card", "Details","Scores", new { id=item.MatchID },null)
         </td>
     </tr>

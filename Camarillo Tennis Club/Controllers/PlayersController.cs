@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Camarillo_Tennis_Club.Models;
 
@@ -12,40 +8,47 @@ namespace Camarillo_Tennis_Club.Controllers
 {
     public class PlayersController : Controller
     {
-      
-
         // GET: Players
         public ActionResult Index()
         {
-            PlayersDBContext playersDBContext = new PlayersDBContext();
-            DataSet dsPlayers = new DataSet();
-            dsPlayers = playersDBContext.GetPlayersDetails();
-            Players players = new Players();
-            List<Players> playersList = new List<Players>();
-            for (int i = 0; i < dsPlayers.Tables[0].Rows.Count; i++)
+            if (Convert.ToString(Session["Role"]) == "Admin")
             {
-                players = new Players();
-                players.PlayerID = Convert.ToInt32(dsPlayers.Tables[0].Rows[i]["PlayerID"]);
-                players.FirstName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["FirstName"]);
-                players.LastName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["LastName"]);
-                players.BDate = Convert.ToDateTime(Convert.ToString(dsPlayers.Tables[0].Rows[i]["BirthDate"]));
-                playersList.Add(players);
+                PlayersDBContext playersDBContext = new PlayersDBContext();
+                DataSet dsPlayers = new DataSet();
+                dsPlayers = playersDBContext.GetPlayersDetails();
+                Players players = new Players();
+                List<Players> playersList = new List<Players>();
+                for (int i = 0; i < dsPlayers.Tables[0].Rows.Count; i++)
+                {
+                    players = new Players();
+                    players.PlayerID = Convert.ToInt32(dsPlayers.Tables[0].Rows[i]["PlayerID"]);
+                    players.FirstName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["FirstName"]);
+                    players.LastName = Convert.ToString(dsPlayers.Tables[0].Rows[i]["LastName"]);
+                    players.BDate = Convert.ToDateTime(Convert.ToString(dsPlayers.Tables[0].Rows[i]["BirthDate"]));
+                    playersList.Add(players);
+                }
+                players.playersList = playersList;
+                return View(players);
             }
-            players.playersList = playersList;
-            return View(players);
-        }
+            else
+            {
+                return View("~/Views/PageNotFound.cshtml");
+            }
 
-        // GET: Players/Details/5
-        //public ActionResult Edit(int id)
-        //{
-           
-        //    return View();
-        //}
+        }
 
         // GET: Players/Create
         public ActionResult Create()
         {
-            return View();
+            if (Convert.ToString(Session["Role"]) == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/PageNotFound.cshtml");
+            }
+
         }
 
         // POST: Players/Create
@@ -58,25 +61,31 @@ namespace Camarillo_Tennis_Club.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (Convert.ToString(Session["Role"]) == "Admin")
                 {
-                    PlayersDBContext playersDBContext = new PlayersDBContext();
-                    int exists = playersDBContext.CheckPlayerExists(players);
-                    if(exists == 1)
+                    if (ModelState.IsValid)
                     {
-                        ViewBag.Text = "Player exists Already!!!!";
-                        return RedirectToAction("RecordExists");
-                       // return View();
-                    }
-                    else if (exists == 0)
-                    {
-                        int result = playersDBContext.InsertPlayerDetails(players);
-                        return RedirectToAction("Save");
-                    }
-                   
-                }
+                        PlayersDBContext playersDBContext = new PlayersDBContext();
+                        int exists = playersDBContext.CheckPlayerExists(players);
+                        if (exists == 1)    // Check if player already exists
+                        {
+                            ViewBag.Text = "Player exists Already!!!!";
+                            return RedirectToAction("RecordExists");
+                        }
+                        else if (exists == 0)
+                        {
+                            int result = playersDBContext.InsertPlayerDetails(players);
+                            return RedirectToAction("Save");
+                        }
 
-                return View(players);
+                    }
+                    return View(players);
+                }
+                else
+                {
+                    return View("~/Views/PageNotFound.cshtml");
+                }
+                
             }
             catch (Exception ex)
             {

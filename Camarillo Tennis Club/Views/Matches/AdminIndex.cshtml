@@ -1,0 +1,56 @@
+﻿@model Camarillo_Tennis_Club.Models.Matches
+
+@{
+    ViewBag.Title = "Matches List";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Search for Score Cards", "Search")*@
+</p>
+<table class="table">
+    <tr class="tr">
+        <th style="background-color:darksalmon">
+            @Html.DisplayNameFor(model => model.MatchName)
+        </th>
+        <th style="background-color:darksalmon">
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th style="background-color:darksalmon">
+            @Html.DisplayNameFor(model => model.MatchDate)
+        </th>
+        <th style="background-color:darksalmon">
+            @Html.DisplayName("Winner Name")
+        </th>
+        <th style="background-color:darksalmon"></th>
+    </tr>
+
+    @foreach (var item in Model.matchesList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatchDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WinnerName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MatchID }) |
+                @Html.ActionLink("View Score Card", "Details", "Scores", new { id = item.MatchID }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to Home Page", "AdminHome", "Login")
+</div>
+

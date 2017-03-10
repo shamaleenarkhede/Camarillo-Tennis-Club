@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
@@ -143,6 +140,7 @@ namespace Camarillo_Tennis_Club.Models
                     cmd.Parameters.Add(paramSearchString);
                 }
 
+                //set null date to the field
                 if (SearchDate == Convert.ToDateTime("01-01-0001"))
                 {
                     SqlParameter paramSearchDate = new SqlParameter();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Sql;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
@@ -85,12 +80,12 @@ namespace Camarillo_Tennis_Club.Models
 
                 SqlParameter paramFirstName = new SqlParameter();
                 paramFirstName.ParameterName = "@FirstName";
-                paramFirstName.Value = players.FirstName;//.ToUpper();
+                paramFirstName.Value = players.FirstName.ToUpper();
                 cmd.Parameters.Add(paramFirstName);
 
                 SqlParameter paramLastName = new SqlParameter();
                 paramLastName.ParameterName = "@LastName";
-                paramLastName.Value = players.LastName;//.ToUpper();
+                paramLastName.Value = players.LastName.ToUpper();
                 cmd.Parameters.Add(paramLastName);
 
 

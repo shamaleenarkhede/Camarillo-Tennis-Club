@@ -11,18 +11,20 @@
 <div class="form-group">
 
     <div class="form-horizontal">
-        @Html.ActionLink("Edit Matches", "Index", "Matches")
+        @Html.ActionLink("View / Edit Matches", "AdminIndex", "Matches")
     </div>
 
     <div class="form-horizontal">
         @Html.ActionLink("Add New Matches", "Create", "Matches")
     </div>
-    @*<div class="col-md-10">
-        @Html.ActionLink("Edit Matches", "Edit", "Matches")
-    </div>*@
 
     <div class="form-horizontal">
         @Html.ActionLink("Add New Players", "Create", "Players")
+
+    </div>
+
+    <div class="form-horizontal">
+        @Html.ActionLink("Players List", "Index", "Players")
 
     </div>
 

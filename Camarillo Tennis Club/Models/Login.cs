@@ -21,6 +21,7 @@ namespace Camarillo_Tennis_Club.Models
         [Display(Name = "Password")]
         public string UserPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("UserPassword", ErrorMessage = "The password and confirmation password do not match.")]

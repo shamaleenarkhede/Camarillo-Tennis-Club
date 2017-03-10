@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
@@ -20,6 +16,7 @@ namespace Camarillo_Tennis_Club.Models
             {
                 for (int i = 0; i < matches.scoreList.Count; i++)
                 {
+                    //Saving Player-1 scores at i =0 and Player-2 score at i=1
                     if (i == 0)
                     {
                         PlayerID = matches.Player1ID;

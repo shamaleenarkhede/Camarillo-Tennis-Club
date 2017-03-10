@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Camarillo_Tennis_Club.Models;
 using System.Data;
@@ -51,15 +48,13 @@ namespace Camarillo_Tennis_Club.Controllers
                         Session["Role"] = "User";
                         return RedirectToAction("Index", "Matches");
                     }
-
-
-                    // return View(login);
+                    
                 }
             }
             catch (Exception ex)
             {
                 return View("Error", new HandleErrorInfo(ex, "Login", "Login"));
-               // return View("Error");
+           
             }
 
             return View();

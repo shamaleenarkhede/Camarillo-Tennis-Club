@@ -12,8 +12,6 @@ namespace Camarillo_Tennis_Club.Controllers
 {
     public class ScoresController : Controller
     {
-        
-
         // GET: Scores
         public ActionResult Index()
         {

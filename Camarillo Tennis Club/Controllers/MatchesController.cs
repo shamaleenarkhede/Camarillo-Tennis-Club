@@ -11,8 +11,8 @@ namespace Camarillo_Tennis_Club.Controllers
 
     public class MatchesController : Controller
     {
-     
 
+        #region ActionResults
         // GET: Matches
         [ExceptionHandler]
         public ActionResult Index()
@@ -41,7 +41,6 @@ namespace Camarillo_Tennis_Club.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return RedirectToAction("Details", "Scores", new { id = "" });
-          //  return View(matches);
         }
 
         // GET: Matches/Create
@@ -79,6 +78,7 @@ namespace Camarillo_Tennis_Club.Controllers
         {
             try
             {
+                // To validate Winner is one of the selected player
                 if (matches.WinnerID == matches.Player1ID || matches.WinnerID == matches.Player2ID)
                 {
                     if (ModelState.IsValid)
@@ -117,30 +117,9 @@ namespace Camarillo_Tennis_Club.Controllers
             {
                 if (Convert.ToString(Session["Role"]) == "Admin")
                 {
-                    TempData["MatchID"] = id;
                     Matches matches = new Matches();
-                    List<Score> scoresList = new List<Score>();
-                    ScoresDBContext scoresDBContext = new ScoresDBContext();
-                    DataSet dsMatchPlayerScores = new DataSet();
-                    dsMatchPlayerScores = scoresDBContext.GetMatchPlayersScores(id);
-                    matches.playerNames = getPlayersList();
-                    matches.Location = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Location"]);
-                    matches.MatchDate = Convert.ToDateTime(dsMatchPlayerScores.Tables[0].Rows[0]["MatchDate"]);
-                    matches.Player1ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player1ID"]);
-                    matches.Player2ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player2ID"]);
-                    matches.WinnerID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerID"]);
-                    matches.Player1Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player1Name"]);
-                    matches.Player2Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player2Name"]);
-                    matches.WinnerName = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerName"]);
-                    for (int i = 0; i < dsMatchPlayerScores.Tables[0].Rows.Count; i++)
-                    {
-                        Score score = new Score();
-                        score.Set1Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set1Score"]);
-                        score.Set2Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set2Score"]);
-                        score.Set3Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set3Score"]);
-                        scoresList.Add(score);
-                    }
-                    matches.scoreList = scoresList;
+                    matches = getMatchData(id);
+                    TempData["MatchID"] = id;
                     return View(matches);
                 }
                 else
@@ -175,7 +154,9 @@ namespace Camarillo_Tennis_Club.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                return View(matches);
+                Matches objMatches = new Matches();
+                objMatches = getMatchData(Convert.ToInt32(TempData["MatchID"]));
+                return View(objMatches);
             }
             catch (Exception ex)
             {
@@ -224,6 +205,70 @@ namespace Camarillo_Tennis_Club.Controllers
             base.Dispose(disposing);
         }
 
+       
+
+        [ActionName("SearchResults")]
+        [HandleError]
+        public ActionResult SearchResults(SearchViewModel searchViewModel)
+        {
+            try
+            {
+                string searchString = Convert.ToString(TempData["searchString"]);
+                DateTime searchDate = Convert.ToDateTime(TempData["searchDate"]);
+                MatchesDBContext matchesDBContext = new MatchesDBContext();
+                DataSet dsResult = new DataSet();
+                dsResult = matchesDBContext.GetMatchUsingSearchString(searchString,searchDate);
+                Matches objMatches = new Matches();
+                objMatches = getMatchResults(dsResult);
+                if (objMatches != null)
+                {
+
+                    return View(objMatches);
+                }
+                else
+                {
+                    return RedirectToAction("Search", "Matches", "Please enter valid data");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Matches", "Search"));
+            }
+
+        }
+
+        public ActionResult Save()
+        {
+            return View();
+        }
+
+        public ActionResult AdminIndex()
+        {
+            try
+            {
+                if (Convert.ToString(Session["Role"]) == "Admin")
+                { 
+                MatchesDBContext matchesDBContext = new MatchesDBContext();
+                DataSet dsMatchesPlayers = new DataSet();
+                dsMatchesPlayers = matchesDBContext.GetMatchesPlayers();
+
+                Matches matches = new Matches();
+                matches = getMatchResults(dsMatchesPlayers);
+                return View(matches);
+                }
+                else { return View("~/Views/PageNotFound.cshtml"); }
+
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Matches", "Index"));
+            }
+           
+        }
+
+        #endregion
+
+        #region Functions
         public List<Players> getPlayersList()
         {
             try
@@ -277,44 +322,37 @@ namespace Camarillo_Tennis_Club.Controllers
             }
 
         }
-
-        [ActionName("SearchResults")]
-        [HandleError]
-        public ActionResult SearchResults(SearchViewModel searchViewModel)
+        public Matches getMatchData(int id)
         {
-            try
+            Matches matches = new Matches();
+            List<Score> scoresList = new List<Score>();
+            ScoresDBContext scoresDBContext = new ScoresDBContext();
+            DataSet dsMatchPlayerScores = new DataSet();
+            dsMatchPlayerScores = scoresDBContext.GetMatchPlayersScores(id);
+            matches.playerNames = getPlayersList();
+            matches.Location = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Location"]);
+            matches.MatchDate = Convert.ToDateTime(dsMatchPlayerScores.Tables[0].Rows[0]["MatchDate"]);
+            matches.Player1ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player1ID"]);
+            matches.Player2ID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["Player2ID"]);
+            matches.WinnerID = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerID"]);
+            matches.Player1Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player1Name"]);
+            matches.Player2Name = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["Player2Name"]);
+            matches.WinnerName = Convert.ToString(dsMatchPlayerScores.Tables[0].Rows[0]["WinnerName"]);
+            for (int i = 0; i < dsMatchPlayerScores.Tables[0].Rows.Count; i++)
             {
-                string searchString = Convert.ToString(TempData["searchString"]);
-                DateTime searchDate = Convert.ToDateTime(TempData["searchDate"]);
-                MatchesDBContext matchesDBContext = new MatchesDBContext();
-                DataSet dsResult = new DataSet();
-                dsResult = matchesDBContext.GetMatchUsingSearchString(searchString,searchDate);
-                Matches objMatches = new Matches();
-                objMatches = getMatchResults(dsResult);
-                if (objMatches != null)
-                {
-
-                    return View(objMatches);
-                }
-                else
-                {
-                    return RedirectToAction("Search", "Matches", "Please enter valid data");
-                }
+                Score score = new Score();
+                score.Set1Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set1Score"]);
+                score.Set2Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set2Score"]);
+                score.Set3Score = Convert.ToInt32(dsMatchPlayerScores.Tables[0].Rows[i]["Set3Score"]);
+                scoresList.Add(score);
             }
-            catch (Exception ex)
-            {
-                return View("Error", new HandleErrorInfo(ex, "Matches", "Search"));
-            }
+            matches.scoreList = scoresList;
+            return matches;
 
         }
 
-        public ActionResult Save()
-        {
-            return View();
-        }
-       
-
+        #endregion
     }
 
-    
+
 }

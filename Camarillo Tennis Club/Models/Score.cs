@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Mvc;
 
 namespace Camarillo_Tennis_Club.Models
 {
@@ -9,9 +8,9 @@ namespace Camarillo_Tennis_Club.Models
     {
         [Key]
         public int ID { get; set; }
-        [ForeignKey("Matches")]
+      
         public int MatchID { get; set; }
-        [ForeignKey("Players")]
+       
         public int PlayerID { get; set; }
 
         [Required(ErrorMessage = "Please enter you Score")]

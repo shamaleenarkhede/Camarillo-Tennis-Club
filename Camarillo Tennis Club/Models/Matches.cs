@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Mvc;
 using Camarillo_Tennis_Club.Validation_Attributes;
 
 namespace Camarillo_Tennis_Club.Models
